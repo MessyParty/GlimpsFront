@@ -1,4 +1,5 @@
 import LikeButton from "@/components/LikeButton";
+import { Perfume } from "@/components/CustomIcon";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
@@ -8,4 +9,8 @@ export default {
 
 export const Default: ComponentStory<typeof LikeButton> = () => {
   return <LikeButton initialState={false} />;
+};
+
+export const PerfumeIcon: ComponentStory<typeof Perfume> = () => {
+  return <Perfume />;
 };
