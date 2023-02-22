@@ -1,23 +1,15 @@
 import { Rating as MuiRating, RatingProps } from "@mui/material";
-import { Perfume, PerfumeFull } from "../CustomIcon";
-import { useController } from "react-hook-form";
+import { Perfume, PerfumeFull, PerfumeHalf } from "../CustomIcon";
 import type {
   FieldPath,
   UseControllerProps,
   FieldValues,
 } from "react-hook-form";
+import EditAbleRating from "./components/EditAbleRating";
 
-interface CustomRatingProps<
-  T extends FieldValues = FieldValues,
-  K extends FieldPath<T> = FieldPath<T>
-> extends RatingProps {
-  controlProps?: UseControllerProps<T, K>;
+interface CustomRatingProps<T = unknown> extends RatingProps {
+  controlProps?: T;
 }
-
-type ControlType = {
-  controlProps: Exclude<CustomRatingProps["controlProps"], undefined>;
-};
-type OmitedRatingProps = Omit<CustomRatingProps, "controlProps">;
 
 const DEFAULT_ICONS: Pick<RatingProps, "icon" | "emptyIcon"> = {
   icon: <PerfumeFull />,
@@ -28,20 +20,17 @@ const ReadOnlyRating = ({ ...props }: RatingProps) => {
   return <MuiRating {...props} readOnly />;
 };
 
-const EditAbleRating = ({
+const Rating = <
+  T extends FieldValues = FieldValues,
+  K extends FieldPath<T> = FieldPath<T>
+>({
   controlProps,
   ...props
-}: OmitedRatingProps & ControlType) => {
-  const { field } = useController({ ...controlProps });
-
-  return <MuiRating {...props} {...field} />;
-};
-
-const Rating = ({ controlProps, ...props }: CustomRatingProps) => {
+}: CustomRatingProps<UseControllerProps<T, K>>) => {
   return controlProps === undefined ? (
     <ReadOnlyRating {...DEFAULT_ICONS} {...props} />
   ) : (
-    <EditAbleRating {...DEFAULT_ICONS} controlProps={controlProps} {...props} />
+    <EditAbleRating {...DEFAULT_ICONS} {...props} controlProps={controlProps} />
   );
 };
 
