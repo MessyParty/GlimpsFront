@@ -1,8 +1,15 @@
 import api from ".";
-import { LoginResponse } from "./Interface/auth.interface";
+import { LoginResponse, RefreshResponse } from "./Interface/auth.interface";
 
 export const login = async (code: string): LoginResponse => {
-  const result = await api.post("/api/v1/session/oauth/login", { code });
+  const result = await api.get("/login/oauth2/code/kakao", {
+    params: { code },
+  });
+  return result.data;
+};
+
+export const refresh = async (): RefreshResponse => {
+  const result = await api.post("/api/v1/session/access-token/issue");
   return result.data;
 };
 
