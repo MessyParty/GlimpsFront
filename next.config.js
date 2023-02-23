@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   webpack(config) {
+    config.resolve.fallback = { fs: false };
     config.module.rules.push({
       test: /\.svg$/,
       use: ["@svgr/webpack"],
@@ -10,5 +11,4 @@ const nextConfig = {
     return config;
   },
 };
-
 module.exports = nextConfig;
