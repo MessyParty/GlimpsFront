@@ -11,12 +11,11 @@ const useRefreshToken = () => {
   const token = getCookie(REFRESH_TOKEN_COOKIE);
 
   const logout = () => {
-    useLogoutQuery();
     alert("로그아웃 되었습니다.");
-    router.replace("/");
+    useLogoutQuery();
   };
 
-  if (token == undefined) {
+  if (token === undefined) {
     logout();
   }
 
