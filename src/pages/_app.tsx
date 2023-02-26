@@ -14,6 +14,7 @@ import { CookiesProvider } from "react-cookie";
 import { Global, ThemeProvider } from "@emotion/react";
 import NavBar from "@/components/NavBar";
 import styled from "@emotion/styled";
+import Footer from "@/components/Footer";
 
 export default function App({ Component, pageProps }: AppProps) {
   // ssr 적용시를 위한 useState
@@ -40,6 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <Container>
                 <NavBar />
                 <Component {...pageProps} />
+                <Footer />
               </Container>
             </ThemeProvider>
           </CookiesProvider>
