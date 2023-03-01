@@ -1,5 +1,5 @@
 import { Rating as MuiRating, RatingProps } from "@mui/material";
-import { Perfume, PerfumeFull, PerfumeHalf } from "../CustomIcon";
+import { Perfume, PerfumeFull } from "../CustomIcon";
 import type {
   FieldPath,
   UseControllerProps,
@@ -12,8 +12,8 @@ interface CustomRatingProps<T = unknown> extends RatingProps {
 }
 
 const DEFAULT_ICONS: Pick<RatingProps, "icon" | "emptyIcon"> = {
-  icon: <PerfumeFull />,
-  emptyIcon: <Perfume />,
+  icon: <PerfumeFull fontSize="inherit" />,
+  emptyIcon: <Perfume fontSize="inherit" />,
 };
 
 const ReadOnlyRating = ({ ...props }: RatingProps) => {
