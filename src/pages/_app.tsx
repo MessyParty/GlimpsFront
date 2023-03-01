@@ -22,14 +22,8 @@ export default function App({ Component, pageProps }: AppProps) {
     () =>
       new QueryClient({
         defaultOptions: { queries: { refetchOnWindowFocus: false } },
-      })
+      }),
   );
-
-  const Container = styled.div`
-    max-width: 1180px;
-    height: 100vh;
-    margin: 0 auto;
-  `;
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -50,3 +44,9 @@ export default function App({ Component, pageProps }: AppProps) {
     </QueryClientProvider>
   );
 }
+
+const Container = styled.div`
+  max-width: 1180px;
+  height: 100vh;
+  margin: 0 auto;
+`;
