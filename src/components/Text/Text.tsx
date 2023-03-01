@@ -1,14 +1,11 @@
 import { Typography, TypographyProps } from "@mui/material";
 
-export interface CustomTypographyProps {
-  variant?: TypographyProps["variant"];
+export interface CustomTypographyProps extends TypographyProps {
   gutterBottom?: boolean;
   noWrap?: boolean;
   paragraph?: boolean;
-  align?: TypographyProps["align"];
   textStyle?: React.CSSProperties;
   children?: React.ReactNode;
-  color?: TypographyProps["color"];
   component?: React.ElementType;
 }
 
