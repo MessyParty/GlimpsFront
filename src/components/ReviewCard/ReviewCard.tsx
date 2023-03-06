@@ -13,10 +13,11 @@ import Rating from "../Rating";
 import { Theme } from "@mui/system";
 import LikeButton from "../LikeButton";
 import { ComponentProps } from "react";
+
 interface ReviewCardProps extends CardProps {
-  reviewTitle?: string;
-  author?: string;
-  score?: number;
+  reviewTitle: string;
+  author: string;
+  score: number;
   description?: string;
   imgSrc?: string;
   ratingSx?: SxProps<Theme>;
@@ -131,6 +132,7 @@ const Quote = styled.div`
       align-items: center;
       & > blockquote {
         font-weight: bold;
+        white-space: pre;
       }
     }
     & > .icon {
