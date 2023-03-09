@@ -4,13 +4,13 @@ import { useEffect } from "react";
 
 const oauth = () => {
   const router = useRouter();
-  const { code } = router.query;
+  const { code } = router.query as { code: string };
 
   useEffect(() => {
     if (!router.isReady) return;
   }, [router.isReady]);
 
-  useLoginQuery((code as string) || "");
+  useLoginQuery(code ?? "");
 
   return null;
 };
