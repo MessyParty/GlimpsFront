@@ -1,13 +1,13 @@
-export type LoginResponse = Promise<{
+export type LoginResponse = {
   accessToken: string;
   accessTokenExpireTime: number;
   grantType: string;
   refreshToken: string;
   refreshTokenExpireTime: number;
-}>;
+};
 
-export type RefreshResponse = Promise<{
+export type RefreshResponse = {
   accessToken: string;
   accessTokenExpireTime: number;
   grantType: string;
-}>;
+};
