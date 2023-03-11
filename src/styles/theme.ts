@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material";
+import { pageCustomComponents } from "./muiCustom/paginationTheme";
 
 const theme = createTheme({
   palette: {
@@ -18,6 +19,7 @@ const theme = createTheme({
         }),
       },
     },
+    ...pageCustomComponents,
   },
   typography: {
     fontFamily: ["Libre Baskerville", "Pretendard-Regular", "sans-serif"].join(

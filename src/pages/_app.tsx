@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
     () =>
       new QueryClient({
         defaultOptions: { queries: { refetchOnWindowFocus: false } },
-      }),
+      })
   );
 
   return (
