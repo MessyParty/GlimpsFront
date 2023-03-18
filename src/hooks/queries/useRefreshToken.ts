@@ -4,7 +4,7 @@ import { CACHE_KEYS } from "@/constants/cacheKeys";
 import { setCookie, getCookie } from "@/utils/cookie";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import useLogoutQuery from "./queries/useLogoutQuery";
+import useLogoutQuery from "./useLogoutQuery";
 
 const useRefreshToken = () => {
   const router = useRouter();
