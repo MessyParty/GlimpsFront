@@ -3,9 +3,11 @@ import { useState } from "react";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import useDebounce from "@/hooks/useDebounce";
+import styled from "@emotion/styled";
 
 type LikeButtonType = {
   initialState?: boolean;
+  likeCnt?: number;
 };
 
 // temporary fetch function
@@ -14,7 +16,7 @@ const tempFetchFunction = (): void => {
   console.log("fetch function called");
 };
 
-const LikeButton = ({ initialState }: LikeButtonType) => {
+const LikeButton = ({ initialState, likeCnt }: LikeButtonType) => {
   const [selected, setSelected] = useState<boolean>(initialState ?? false);
   const apiFetch = useDebounce({ callBack: tempFetchFunction, timeout: 2000 });
 
@@ -24,10 +26,25 @@ const LikeButton = ({ initialState }: LikeButtonType) => {
   };
 
   return (
-    <IconButton onClick={handleClick} disableRipple>
-      {selected ? <Favorite /> : <FavoriteBorder />}
-    </IconButton>
+    <>
+      <IconButton
+        color="primary"
+        onClick={handleClick}
+        disableRipple
+        style={{ padding: "6px" }}
+      >
+        {selected ? <Favorite /> : <FavoriteBorder />}
+      </IconButton>
+      <LikeCnt>{likeCnt ?? 16}</LikeCnt>
+    </>
   );
 };
 
 export default LikeButton;
+
+const LikeCnt = styled.div`
+  display: inline-block;
+  font-size: 18px;
+  vertical-align: middle;
+  line-height: 18px;
+`;
