@@ -11,3 +11,22 @@ export type Review = {
   sillageRatings: number;
   title: string;
 };
+
+export type ReviewFormType = Pick<
+  Review,
+  | "body"
+  | "longevityRatings"
+  | "overallRatings"
+  | "photoUrls"
+  | "sillageRatings"
+  | "title"
+>;
+
+export type ReviewPostType = ReviewFormType & { perfumeUuid: string };
+
+export type ReviewParameterType = {
+  limit: number;
+  offset: number;
+  orderStandard: string;
+  sortType: string;
+};

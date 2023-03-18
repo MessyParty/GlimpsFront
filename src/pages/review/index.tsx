@@ -6,10 +6,16 @@ const ReviewPage = () => {};
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const queryClient = new QueryClient();
-  queryClient.prefetchQuery({
-    queryKey: ["review", "best"],
-    queryFn: () => getBestReview(3),
-  });
+
+  await Promise.allSettled([
+    queryClient.prefetchQuery({
+      queryKey: ["review", "best"],
+      queryFn: () => getBestReview(3),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ["review", "all", 0, 10, "DATE", "DESC"],
+    }),
+  ]);
 
   return {
     props: {
