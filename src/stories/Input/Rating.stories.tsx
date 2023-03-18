@@ -29,7 +29,11 @@ export const Editable: ComponentStory<typeof Rating> = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Rating
-        controlProps={{ name: "score", control }}
+        controlProps={{
+          name: "score",
+          control,
+          rules: { validate: (value, formValue) => value !== 0 },
+        }}
         precision={0.5}
         defaultValue={0}
       />
