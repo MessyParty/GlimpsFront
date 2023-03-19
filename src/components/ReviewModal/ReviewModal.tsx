@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { OverallRating } from "./components";
 import type { ReviewPostType } from "@/apis/Interface/review.interface";
 import SpecificRating from "./components/SpecificRating";
+import MoodSelector from "./components/MoodSelector";
 
 type ReviewFormType = Omit<ReviewPostType, "perfumeUuid">;
 type ReviewModalPropsType = Pick<ReviewPostType, "perfumeUuid">;
@@ -32,6 +33,7 @@ const ReviewModal = ({ perfumeUuid }: ReviewModalPropsType) => {
       <Form onSubmit={methods.handleSubmit(onSubmit)}>
         <OverallRating />
         <SpecificRating />
+        <MoodSelector />
         <button type="submit">submit</button>
       </Form>
     </FormProvider>
