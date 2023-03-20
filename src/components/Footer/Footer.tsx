@@ -13,7 +13,7 @@ const Footer = () => {
 
   return (
     <FooterContainer>
-      <p>Copyrightⓒ2023 by glims. All rights reserved.</p>
+      <p>Copyright 2023 by glims. All rights reserved.</p>
     </FooterContainer>
   );
 };
