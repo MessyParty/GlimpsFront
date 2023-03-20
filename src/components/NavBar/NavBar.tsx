@@ -4,11 +4,14 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { IconButton } from "@mui/material";
+import Logo from "../CustomIcon/Logo/Logo";
 
 const NavBar = () => {
   return (
     <div>
-      <Logo>glims</Logo>
+      <LogoContainer>
+        <Logo style={{ width: "155px", height: "auto" }} />
+      </LogoContainer>
       <NavContainer>
         <Nav>
           <Link href="/about">About</Link>
@@ -29,11 +32,9 @@ const NavBar = () => {
   );
 };
 
-const Logo = styled.div`
+const LogoContainer = styled.div`
   text-align: center;
-  font-size: 58px;
-  font-weight: bold;
-  margin: 2.5rem 0;
+  margin: 2rem 0;
 `;
 
 const NavContainer = styled.div`
