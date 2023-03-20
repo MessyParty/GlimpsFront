@@ -10,7 +10,9 @@ const NavBar = () => {
   return (
     <div>
       <LogoContainer>
-        <Logo style={{ width: "155px", height: "auto" }} />
+        <Link href="/">
+          <Logo style={{ width: "155px", height: "auto" }} />
+        </Link>
       </LogoContainer>
       <NavContainer>
         <Nav>
