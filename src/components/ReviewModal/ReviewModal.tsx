@@ -5,6 +5,7 @@ import type { ReviewPostType } from "@/apis/Interface/review.interface";
 import SpecificRating from "./components/SpecificRating";
 import MoodSelector from "./components/MoodSelector";
 import TitleInput from "./components/TitleInput";
+import Description from "./components/Description";
 
 type ReviewFormType = Omit<ReviewPostType, "perfumeUuid">;
 type ReviewModalPropsType = Pick<ReviewPostType, "perfumeUuid">;
@@ -23,7 +24,7 @@ const ReviewModal = ({ perfumeUuid }: ReviewModalPropsType) => {
   });
   const { errors } = useFormState({
     control: methods.control,
-    name: ["tags", "title"],
+    name: ["tags", "title", "body"],
   });
 
   const onSubmit = (data: ReviewFormType) => {
@@ -39,6 +40,8 @@ const ReviewModal = ({ perfumeUuid }: ReviewModalPropsType) => {
         <p>{errors?.tags?.message}</p>
         <TitleInput />
         <p>{errors?.title?.message}</p>
+        <Description />
+        <p>{errors?.body?.message}</p>
         <button type="submit">submit</button>
       </Form>
     </FormProvider>
