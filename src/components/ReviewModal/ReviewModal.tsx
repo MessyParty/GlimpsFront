@@ -22,7 +22,7 @@ const ReviewModal = ({ perfumeUuid }: ReviewModalPropsType) => {
   });
   const { errors } = useFormState({
     control: methods.control,
-    name: "overallRatings",
+    name: "tags",
   });
 
   const onSubmit = (data: ReviewFormType) => {
@@ -35,6 +35,7 @@ const ReviewModal = ({ perfumeUuid }: ReviewModalPropsType) => {
         <OverallRating />
         <SpecificRating />
         <MoodSelector />
+        <p>{errors?.tags?.message}</p>
         <button type="submit">submit</button>
       </Form>
     </FormProvider>

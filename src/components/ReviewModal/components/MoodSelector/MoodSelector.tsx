@@ -2,7 +2,6 @@ import { useFormContext } from "react-hook-form";
 import { Box, Chip } from "@mui/material";
 import Select from "@/components/Select";
 import styled from "@emotion/styled";
-import type { ReviewFormType } from "@/apis/Interface/review.interface";
 
 const DATA: { value: string; name: string }[] = [
   { value: "sensitive", name: "섬세한" },
@@ -15,7 +14,11 @@ const MoodSelector = () => {
   return (
     <Select
       wrapper={Wrapper}
-      formProps={{ control, name: "tags" }}
+      formProps={{
+        control,
+        name: "tags",
+        rules: { required: "필수 선택값입니다!" },
+      }}
       names={DATA}
       multiple
       renderValue={(value) => (
