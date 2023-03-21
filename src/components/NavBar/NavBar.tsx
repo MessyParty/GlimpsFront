@@ -4,11 +4,11 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { IconButton } from "@mui/material";
-import Logo from "../CustomIcon/Logo/Logo";
+import Logo from "@/components/CustomIcon/Logo";
 
 const NavBar = () => {
   return (
-    <div>
+    <>
       <LogoContainer>
         <Link href="/">
           <Logo style={{ width: "155px", height: "auto" }} />
@@ -30,7 +30,7 @@ const NavBar = () => {
           </IconButton>
         </Utils>
       </NavContainer>
-    </div>
+    </>
   );
 };
 
