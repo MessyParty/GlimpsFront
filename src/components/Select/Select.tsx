@@ -35,7 +35,7 @@ const Select = <
   return (
     <Wrapper>
       <FormControl sx={{ width: "100%", height: "100%" }}>
-        <MuiSelect {...field} {...props}>
+        <MuiSelect {...field} {...props} value={field.value}>
           {names?.map(({ name, value }) => (
             <MenuItem key={value} value={value} {...menuItemProps}>
               {name}

@@ -15,6 +15,7 @@ const ReviewModal = ({ perfumeUuid }: ReviewModalPropsType) => {
       longevityRatings: 0,
       overallRatings: 0,
       photoUrls: [],
+      tags: [],
       sillageRatings: 0,
       title: "",
     },
