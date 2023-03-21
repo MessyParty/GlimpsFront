@@ -4,9 +4,10 @@ import type {
   UseControllerProps,
   FieldValues,
 } from "react-hook-form";
-import { TextField, OutlinedTextFieldProps } from "@mui/material";
+import { TextField, TextFieldProps } from "@mui/material";
 
-interface OverriedInputProps extends OutlinedTextFieldProps {}
+type CustomInputProps = {};
+type OverriedInputProps = TextFieldProps & CustomInputProps;
 
 const Input = <
   T extends FieldValues = FieldValues,
