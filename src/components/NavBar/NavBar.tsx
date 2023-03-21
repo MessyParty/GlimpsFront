@@ -4,16 +4,24 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { IconButton } from "@mui/material";
+
+import Logo from "@/components/CustomIcon/Logo";
+
 import { useRouter } from "next/router";
 import { ERROR_PAGE_REGEX } from "@/constants/regex";
+
 
 const NavBar = () => {
   const router = useRouter();
 
   if (ERROR_PAGE_REGEX.test(router.pathname)) return null;
   return (
-    <div>
-      <Logo>glims</Logo>
+    <>
+      <LogoContainer>
+        <Link href="/">
+          <Logo style={{ width: "155px", height: "auto" }} />
+        </Link>
+      </LogoContainer>
       <NavContainer>
         <Nav>
           <Link href="/about">About</Link>
@@ -30,15 +38,13 @@ const NavBar = () => {
           </IconButton>
         </Utils>
       </NavContainer>
-    </div>
+    </>
   );
 };
 
-const Logo = styled.div`
+const LogoContainer = styled.div`
   text-align: center;
-  font-size: 58px;
-  font-weight: bold;
-  margin: 2.5rem 0;
+  margin: 2rem 0;
 `;
 
 const NavContainer = styled.div`
