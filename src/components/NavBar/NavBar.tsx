@@ -10,14 +10,26 @@ import { useRecoilState } from "recoil";
 import { modalOpenState } from "@/recoil/modalState";
 import SearchModal from "@/components/SearchModal";
 import Modal from "../Modal";
+import { useRecoilValue } from "recoil";
+import { loginState } from "@/recoil/auth";
+import { LoginOutlined, LogoutOutlined } from "@mui/icons-material";
+import useLogoutQuery from "@/hooks/queries/useLogoutQuery";
 
 const NavBar = () => {
   const router = useRouter();
-
+  const isLogined = useRecoilValue(loginState);
   const [open, setOpen] = useRecoilState(modalOpenState);
 
-  const moveToMyPage = () => {
+  const mypage = () => {
     router.push("/mypage");
+  };
+
+  const login = () => {
+    // TODO: modal open
+  };
+
+  const logout = () => {
+    useLogoutQuery();
   };
 
   if (ERROR_PAGE_REGEX.test(router.pathname)) return null;
@@ -45,9 +57,20 @@ const NavBar = () => {
             <SearchIcon />
             <Modal open={open} content={<SearchModal />} />
           </IconButton>
-          <IconButton color="primary" aria-label="user" onClick={moveToMyPage}>
-            <PersonOutlineIcon />
-          </IconButton>
+          {isLogined ? (
+            <>
+              <IconButton color="primary" aria-label="user" onClick={mypage}>
+                <PersonOutlineIcon />
+              </IconButton>
+              <IconButton color="primary" aria-label="logout" onClick={logout}>
+                <LogoutOutlined />
+              </IconButton>
+            </>
+          ) : (
+            <IconButton color="primary" aria-label="login" onClick={login}>
+              <LoginOutlined />
+            </IconButton>
+          )}
         </Utils>
       </NavContainer>
     </>
