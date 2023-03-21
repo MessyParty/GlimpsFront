@@ -4,8 +4,13 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { IconButton } from "@mui/material";
+import { useRouter } from "next/router";
+import { ERROR_PAGE_REGEX } from "@/constants/regex";
 
 const NavBar = () => {
+  const router = useRouter();
+
+  if (ERROR_PAGE_REGEX.test(router.pathname)) return null;
   return (
     <div>
       <Logo>glims</Logo>
