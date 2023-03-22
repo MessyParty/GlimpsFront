@@ -6,6 +6,7 @@ import SpecificRating from "./components/SpecificRating";
 import MoodSelector from "./components/MoodSelector";
 import TitleInput from "./components/TitleInput";
 import Description from "./components/Description";
+import ImageInput from "./components/ImageInput";
 
 type ReviewFormType = Omit<ReviewPostType, "perfumeUuid">;
 type ReviewModalPropsType = Pick<ReviewPostType, "perfumeUuid">;
@@ -42,6 +43,7 @@ const ReviewModal = ({ perfumeUuid }: ReviewModalPropsType) => {
         <p>{errors?.title?.message}</p>
         <Description />
         <p>{errors?.body?.message}</p>
+        <ImageInput />
         <button type="submit">submit</button>
       </Form>
     </FormProvider>
