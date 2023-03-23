@@ -14,18 +14,16 @@ const LoginModal = () => {
   };
 
   const content = (
-    <>
-      <Container>
-        <Logo style={{ width: "154px", height: "auto", padding: "0 100px" }} />
-        <Typography fontSize={20} padding="14px 50px 80px 50px">
-          로그인 후 나만의 향수를 찾아보세요!
-        </Typography>
-        // TODO: 아이콘 레이아웃 수정 필요
-        <KakaoLoginButton startIcon={<KakaoLogin />} onClick={login}>
-          <Typography fontSize={18}>카카오로 로그인하기</Typography>
-        </KakaoLoginButton>
-      </Container>
-    </>
+    <Container>
+      <Logo style={{ width: "154px", height: "auto", padding: "0 100px" }} />
+      <Typography fontSize={20} padding="14px 50px 80px 50px">
+        로그인 후 나만의 향수를 찾아보세요!
+      </Typography>
+      {/* TODO: 아이콘 레이아웃 수정 필요 */}
+      <KakaoLoginButton startIcon={<KakaoLogin />} onClick={login}>
+        <Typography fontSize={18}>카카오로 로그인하기</Typography>
+      </KakaoLoginButton>
+    </Container>
   );
 
   return <Modal open={true} content={content}></Modal>;

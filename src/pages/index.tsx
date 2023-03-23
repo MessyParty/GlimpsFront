@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import useLogoutQuery from "@/hooks/queries/useLogoutQuery";
 import LoginModal from "@/components/LoginModal";
 import { modalOpenState } from "@/recoil/modalState";
+import LoginRequiredModal from "@/components/LoginRequiredModal";
 
 export default function Home() {
   const router = useRouter();
@@ -37,7 +38,7 @@ export default function Home() {
       >
         모달창 열기
       </Button>
-      <LoginModal />
+      <LoginRequiredModal />
     </>
   );
 }
