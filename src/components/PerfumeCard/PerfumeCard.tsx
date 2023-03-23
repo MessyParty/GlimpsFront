@@ -21,7 +21,7 @@ const PerfumeCard = ({
   ...props
 }: PerfumeCardProps) => {
   return (
-    <Container {...props} elevation={0} style={{ overflow: "visible" }}>
+    <Container {...props} elevation={0}>
       <div className="perfume-img">
         <CardMedia
           component="img"
@@ -50,6 +50,7 @@ const PerfumeCard = ({
 export default PerfumeCard;
 
 const Container = styled(Card)`
+  overflow: visible;
   width: fit-content;
   flex: 0 0 385px;
 
