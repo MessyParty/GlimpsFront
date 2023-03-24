@@ -10,6 +10,7 @@ const useProfileQuery = () => {
 
   return useQuery<ProfileResponse>(CACHE_KEYS.profile, () => profile(), {
     enabled: !!accessToken,
+    cacheTime: Infinity,
     staleTime: Infinity,
   });
 };
