@@ -66,7 +66,7 @@ const ReviewModal = ({
             <Typography variant="h6">Mood</Typography>
             <MoodSelector />
             {errors?.tags?.message ? (
-              <Typography>{errors?.tags?.message}</Typography>
+              <ErrorMsg>{errors?.tags?.message}</ErrorMsg>
             ) : null}
           </WrapperFull>
           <Spacer />
@@ -74,7 +74,7 @@ const ReviewModal = ({
             <Typography variant="h6">Title</Typography>
             <TitleInput />
             {errors?.title?.message ? (
-              <Typography>{errors?.title?.message}</Typography>
+              <ErrorMsg>{errors?.title?.message}</ErrorMsg>
             ) : null}
           </WrapperFull>
           <Spacer />
@@ -82,7 +82,7 @@ const ReviewModal = ({
             <Typography variant="h6">Description</Typography>
             <Description />
             {errors?.body?.message ? (
-              <Typography>{errors?.body?.message}</Typography>
+              <ErrorMsg>{errors?.body?.message}</ErrorMsg>
             ) : null}
           </WrapperFull>
           <Spacer />
@@ -140,4 +140,8 @@ const WrapperFull = styled.div`
   align-self: stretch;
   display: flex;
   flex-direction: column;
+`;
+
+const ErrorMsg = styled(Typography)`
+  color: red;
 `;
