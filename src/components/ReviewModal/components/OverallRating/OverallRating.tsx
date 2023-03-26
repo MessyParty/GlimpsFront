@@ -14,6 +14,7 @@ const OverallRating = () => {
           rules: { required: true },
         }}
         precision={0.5}
+        sx={{ fontSize: "48px" }}
       />
     </Wrapper>
   );
