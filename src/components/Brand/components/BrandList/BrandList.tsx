@@ -15,10 +15,12 @@ export default function BrandList({ perfumeList }: BrandListProps) {
   return (
     <BrandContainer>
       {perfumeList?.map((perfume) => (
-        <ul key={perfume.id}>
-          <BrandEn>{perfume.brand}</BrandEn>
-          <BrandKr>{perfume.brandKr}</BrandKr>
-        </ul>
+        <div key={perfume.id}>
+          <button className="perfume-button">
+            <BrandEn>{perfume.brand}</BrandEn>
+            <BrandKr>{perfume.brandKr}</BrandKr>
+          </button>
+        </div>
       ))}
     </BrandContainer>
   );
@@ -29,18 +31,23 @@ const BrandContainer = styled.div`
   grid-template-columns: 1fr 1fr 1fr 1fr;
   align-content: center;
 
-  & ul {
+  & div {
     margin: 1rem 0;
+    & .perfume-button {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
   }
 `;
 
-const BrandEn = styled.li`
+const BrandEn = styled.p`
   font-size: 22px;
   font-weight: bold;
   padding: 10px 0;
 `;
 
-const BrandKr = styled.li`
+const BrandKr = styled.p`
   font-size: 20px;
   padding: 10px 0;
 `;
