@@ -34,7 +34,10 @@ const MoodSelector = () => {
 
 export default MoodSelector;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 50%;
+  max-width: 50%;
+`;
 
 const ChipBox = styled.div`
   display: flex;

@@ -23,7 +23,7 @@ const SpecificRating = () => {
           <div className="title">
             <Typography>{title}</Typography>
           </div>
-          <Rating controlProps={{ name, control }} />
+          <Rating controlProps={{ name, control }} precision={0.5} />
         </Item>
       ))}
     </Wrapper>
