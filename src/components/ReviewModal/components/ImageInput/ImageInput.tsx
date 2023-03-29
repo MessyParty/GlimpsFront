@@ -10,6 +10,8 @@ import type {
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import styled from "@emotion/styled";
 
+const fileReader = new FileReader();
+
 const ImageInput = () => {
   const { control } = useFormContext();
   const [thumbnail, setThumbnail] = useState("");
