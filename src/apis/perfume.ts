@@ -17,9 +17,9 @@ export const getBestPerfume = async (num: number): Promise<Perfume[]> => {
 };
 
 export const getSortPerfume = async (name: string): Promise<Perfume[]> => {
-  const { data } = await axios.get<Perfume[]>("perfumes?brandname", {
+  const { data } = await axios.get<Perfume[]>("/perfumes", {
     params: {
-      name,
+      brandname: name,
     },
   });
   return data;
