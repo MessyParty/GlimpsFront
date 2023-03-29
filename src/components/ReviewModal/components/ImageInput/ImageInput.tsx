@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
 import { Box, IconButton } from "@mui/material";
 import { useFormContext, useController, useWatch } from "react-hook-form";
@@ -9,26 +10,40 @@ import type {
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import styled from "@emotion/styled";
 
+const fileReader = new FileReader();
+
 const ImageInput = () => {
   const { control } = useFormContext();
+  const [thumbnail, setThumbnail] = useState("");
   const img = useWatch({
     control,
     name: "photo",
   });
 
   useEffect(() => {
-    if (img) console.log(img);
+    if (!img) return;
+    fileReader.readAsDataURL(img[0]);
+    fileReader.onload = () => {
+      const { result } = fileReader;
+      if (typeof result !== "string") return;
+      setThumbnail(result);
+    };
   }, [img]);
 
   return (
-    <div>
+    <ImageInputWrapper>
       <InputWrapper>
         <IconButton component="label">
           <HiddenInput control={control} name="photo" />
           <AddAPhotoIcon />
         </IconButton>
       </InputWrapper>
-    </div>
+      {thumbnail ? (
+        <PreviewWrapper>
+          <img src={thumbnail} alt="" />
+        </PreviewWrapper>
+      ) : null}
+    </ImageInputWrapper>
   );
 };
 
@@ -58,10 +73,24 @@ const HiddenInput = <
 
 export default ImageInput;
 
+const ImageInputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+`;
+
 const InputWrapper = styled(Box)`
   padding: 1rem;
   border: 1px solid black;
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const PreviewWrapper = styled.div`
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;

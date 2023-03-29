@@ -13,8 +13,8 @@ import Spacer from "../Spacer";
 
 type ReviewFormType = Omit<ReviewPostType, "perfumeUuid">;
 type ReviewModalPropsType = Pick<ReviewPostType, "perfumeUuid"> & {
-  perfumeName: string;
-  perfumeSubName: string;
+  perfumeName?: string;
+  perfumeSubName?: string;
 };
 
 const ReviewModal = ({
