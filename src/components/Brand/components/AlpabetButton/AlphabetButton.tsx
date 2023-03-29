@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Button from "@/components/Button";
-import useMoveScroll from "@/hooks/useMoveScroll";
+
 import { brandData } from "@root/__mocks__/brandData";
 
-export default function AlphabetButton() {
-  const { onMoveToElement } = useMoveScroll();
+type MoveScrollProps = {
+  onMoveToElement: (id: string) => void;
+};
 
+export default function AlphabetButton({ onMoveToElement }: MoveScrollProps) {
   return (
     <ButtonList>
       {brandData.map((data) => (
@@ -14,11 +16,7 @@ export default function AlphabetButton() {
           <Button
             variant="outlined"
             size="large"
-            onClick={() =>
-              onMoveToElement(
-                document.getElementById(data.alphabet) as HTMLDivElement,
-              )
-            }
+            onClick={() => onMoveToElement(data.alphabet)}
           >
             {data.alphabet}
           </Button>

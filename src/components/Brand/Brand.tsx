@@ -3,18 +3,23 @@ import React from "react";
 import AlphabetButton from "./components/AlpabetButton/index";
 import BrandList from "./components/BrandList";
 import styled from "@emotion/styled";
+import useMoveScroll from "@/hooks/useMoveScroll";
 
 export default function Brand() {
+  const { targetRef, onMoveToElement } = useMoveScroll();
+
   return (
-    <div>
-      <AlphabetButton />
+    <>
+      <AlphabetButton onMoveToElement={onMoveToElement} />
       {brandData.map((data) => (
         <BrandBox key={data.id}>
-          <BrandListTitle id={data.alphabet}>{data.alphabet}</BrandListTitle>
+          <BrandListTitle id={data.alphabet} ref={targetRef}>
+            {data.alphabet}
+          </BrandListTitle>
           <BrandList perfumeList={data.perfumeList} />
         </BrandBox>
       ))}
-    </div>
+    </>
   );
 }
 
