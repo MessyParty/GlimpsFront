@@ -1,174 +1,152 @@
-import {
-  Card,
-  CardProps,
-  CardMedia,
-  CardContent,
-  Typography,
-  Divider,
-  SxProps,
-} from "@mui/material";
-import { QuoteLeft, QuoteRight } from "@/components/CustomIcon";
 import styled from "@emotion/styled";
-import Rating from "../Rating";
-import { Theme } from "@mui/system";
-import LikeButton from "../LikeButton";
+import { Card, CardMedia, CardProps, Typography } from "@mui/material";
 import { ComponentProps } from "react";
+import { QuoteLeft, QuoteRight } from "../CustomIcon";
+import LikeButton from "../LikeButton";
+import Rating from "../Rating";
+import Tag from "../Tag";
 
 interface ReviewCardProps extends CardProps {
   reviewTitle: string;
   author: string;
   score: number;
+  tags: string[];
   description?: string;
   imgSrc?: string;
-  ratingSx?: SxProps<Theme>;
   LikeButtonProps?: ComponentProps<typeof LikeButton>;
   likeCount?: number;
 }
 
-const ReviewCard = ({
+const ReviewCard2 = ({
   reviewTitle,
   author,
   score,
+  tags,
   description,
   imgSrc,
-  ratingSx,
   LikeButtonProps,
-  likeCount,
   ...props
 }: ReviewCardProps) => {
   return (
     <Container {...props} elevation={0}>
-      <Wrapper>
-        <Content>
+      <PerfumeReview>
+        <ReviewContent>
           <Quote>
-            <div className="main">
-              <div className="icon">
-                <QuoteLeft />
-              </div>
-              <div className="quote">
-                <Typography variant="h5" component="blockquote" fontSize="28px">
-                  {reviewTitle}
-                </Typography>
-              </div>
-              <div className="icon">
-                <QuoteRight />
-              </div>
-            </div>
-            <div className="author">
-              <Typography>by {author}</Typography>
-            </div>
+            <QuoteLeft />
+            <Typography
+              variant="h5"
+              component="blockquote"
+              fontSize="28px"
+              margin="0 12px"
+              paddingTop="20px"
+            >
+              {reviewTitle}
+            </Typography>
+            <QuoteRight />
           </Quote>
-          <Divider />
-          <RatingWrapper>
-            <div className="rating-title">
-              <Typography fontWeight="bold">AVERAGE</Typography>
-              <Typography fontWeight="bold">SCORE</Typography>
-            </div>
-            <Rating
-              sx={ratingSx}
-              value={score ?? 1.5}
-              precision={0.5}
-              size="large"
-            />
-          </RatingWrapper>
-          <Divider />
-          <Typography>{description}</Typography>
-        </Content>
-      </Wrapper>
+          <div className="author">by {author}</div>
+        </ReviewContent>
+        <ReviewContent>
+          <div className="rating-title">
+            <Typography fontWeight="bold">AVERAGE</Typography>
+            <Typography fontWeight="bold">SCORE</Typography>
+          </div>
+          <Rating
+            sx={{ fontSize: "48px" }}
+            value={score ?? 1.5}
+            precision={0.5}
+            size="large"
+          />
+        </ReviewContent>
+        <ReviewContent>
+          {tags.map((tag, index) => (
+            <Tag key={index} content={tag} />
+          ))}
+        </ReviewContent>
+        <ReviewContent>
+          <Typography fontSize={20}>
+            {description?.slice(0, 120) + "..."}
+          </Typography>
+        </ReviewContent>
+      </PerfumeReview>
       <PerfumeImg>
-        <div className="perfume-img">
-          <CardMedia component="img" image={imgSrc} alt="review image" />
-        </div>
+        <CardMedia
+          component="img"
+          image={imgSrc}
+          alt="review image"
+          width={500}
+          height={500}
+          style={{ minWidth: "500px", minHeight: "500px" }}
+        />
         <div className="likes">
           <LikeButton {...LikeButtonProps} />
-          {likeCount ?? "0"}
         </div>
       </PerfumeImg>
     </Container>
   );
 };
 
-export default ReviewCard;
+export default ReviewCard2;
 
 const Container = styled(Card)`
   display: flex;
-  align-items: center;
-`;
 
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-`;
+  & > .perfume-img {
+    position: relative;
 
-const Content = styled(CardContent)`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  height: 100%;
-  flex-basis: 60%;
-`;
-
-const RatingWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  & > .rating-title {
-    display: flex;
-    flex-direction: column;
+    & > .like-button {
+      position: absolute;
+      right: 48px;
+      bottom: 22px;
+    }
   }
-  & > .MuiRating-root {
-    flex: 1;
+`;
+
+const PerfumeReview = styled.div`
+  flex: 1;
+`;
+
+const ReviewContent = styled.div`
+  padding: 28px 0 28px 0;
+  border-bottom: 1px solid #f5f5f5;
+
+  & > .rating-title {
+    display: inline-block;
+    padding-right: 22px;
+  }
+
+  & > .author {
+    margin-top: 10px;
+    text-align: right;
+    font-size: 18px;
+  }
+
+  &:first-of-type {
+    padding-top: 0;
+  }
+
+  &:last-of-type {
+    padding-bottom: 0;
+    border-bottom: 0;
   }
 `;
 
 const Quote = styled.div`
   display: flex;
-  flex-direction: column;
-  & > .main {
-    display: flex;
-    & > .quote {
-      padding: 0 10px;
-      display: flex;
-      align-items: center;
-      & > blockquote {
-        font-weight: bold;
-        white-space: pre;
-      }
-    }
-    & > .icon {
-      min-width: 39px;
-      min-height: 38px;
-      & > svg {
-        width: 100% !important;
-        height: 100% !important;
-      }
-    }
-  }
-  & > .author {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+
+  & > svg {
+    min-width: 40px;
+    min-height: 40px;
   }
 `;
 
 const PerfumeImg = styled.div`
-  flex-basis: 40%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  & > .perfume-img {
-    width: 100%;
-    height: 100%;
-    & > img {
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
-    }
-  }
+  position: relative;
+  padding-left: 55px;
+
   & > .likes {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    position: absolute;
+    right: 48px;
+    bottom: 22px;
   }
 `;

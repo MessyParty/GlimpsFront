@@ -11,3 +11,12 @@ export type RefreshResponse = {
   accessTokenExpireTime: number;
   grantType: string;
 };
+
+export type ProfileResponse = {
+  createdAt: string;
+  email: string;
+  nickname: string;
+  reviewCnt: number;
+  role: string;
+  userType: string;
+};
