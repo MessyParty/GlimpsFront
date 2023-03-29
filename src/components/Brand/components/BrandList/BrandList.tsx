@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-type Perfume = {
+type PerfumeData = {
   id: number;
   brand: string;
   brandKr: string;
 };
 
 interface BrandListProps {
-  perfumeList: Perfume[];
+  perfumeList: PerfumeData[];
 }
 
 export default function BrandList({ perfumeList }: BrandListProps) {
@@ -36,18 +36,18 @@ const BrandContainer = styled.div`
     & .perfume-button {
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      align-items: flex-start;
     }
   }
 `;
 
-const BrandEn = styled.p`
+const BrandEn = styled.span`
   font-size: 22px;
   font-weight: bold;
   padding: 10px 0;
 `;
 
-const BrandKr = styled.p`
+const BrandKr = styled.span`
   font-size: 20px;
   padding: 10px 0;
 `;
