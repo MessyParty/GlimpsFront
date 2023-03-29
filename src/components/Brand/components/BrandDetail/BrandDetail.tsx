@@ -11,7 +11,7 @@ export default function BrandDetail(): JSX.Element {
   const observerElement = useObserver(fetchNextPage, hasNextPage);
 
   return (
-    <div>
+    <>
       {isSuccess &&
         data?.pages.map((page, i) => (
           <div key={i}>
@@ -26,6 +26,6 @@ export default function BrandDetail(): JSX.Element {
       <div className="loader" ref={observerElement}>
         {isFetchingNextPage && hasNextPage ? "Loading..." : "No search left"}
       </div>
-    </div>
+    </>
   );
 }
