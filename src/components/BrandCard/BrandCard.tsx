@@ -28,7 +28,7 @@ const BrandCard = ({
           <CardMedia component="img" image={imgSrc} alt="perfume image" />
         </div>
         <PerfumeBox>
-          <div className="perfumeInfo">
+          <div className="perfume-info">
             <Typography fontSize="21px" fontWeight="bold">
               {brandName}
             </Typography>
@@ -50,6 +50,7 @@ const Container = styled(Card)`
   border-radius: 0;
   border: 1px solid #000;
 `;
+
 const Content = styled(CardContent)`
   padding: 0;
   & > .perfume-img img {
@@ -58,14 +59,12 @@ const Content = styled(CardContent)`
     min-height: 405px;
   }
 `;
+
 const PerfumeBox = styled.div`
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #000;
   margin: 2rem 1.5rem;
-
-  & .perfumeInfo {
-  }
 
   & .score {
     width: 66px;
