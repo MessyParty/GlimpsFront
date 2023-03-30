@@ -6,14 +6,17 @@ import styled from "@emotion/styled";
 import useMoveScroll from "@/hooks/useMoveScroll";
 
 export default function Brand() {
-  const { targetRef, onMoveToElement } = useMoveScroll();
+  const { scrollRef, onMoveToElement } = useMoveScroll();
 
   return (
     <>
       <AlphabetButton onMoveToElement={onMoveToElement} />
-      {brandData.map((data) => (
+      {brandData.map((data, index) => (
         <BrandBox key={data.id}>
-          <BrandListTitle id={data.alphabet} ref={targetRef}>
+          <BrandListTitle
+            id={data.alphabet}
+            ref={(ref) => (scrollRef.current[index] = ref as HTMLDivElement)}
+          >
             {data.alphabet}
           </BrandListTitle>
           <BrandList perfumeList={data.perfumeList} />

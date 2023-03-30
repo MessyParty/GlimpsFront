@@ -1,12 +1,14 @@
 import { useRef } from "react";
 
 export default function useMoveScroll() {
-  const targetRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<Array<HTMLDivElement>>([]);
 
-  const onMoveToElement = (id: string) => {
-    const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const onMoveToElement = (index: number) => {
+    scrollRef.current[index]?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
-  return { targetRef, onMoveToElement };
+  return { scrollRef, onMoveToElement };
 }
