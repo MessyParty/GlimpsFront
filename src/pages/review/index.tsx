@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { getBestReview, getAllReview } from "@/apis/review";
