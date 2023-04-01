@@ -1,19 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
+import { getAllReview } from "@/apis/review";
 
 type UseReviewsProps = {
   offset?: number;
   limit?: number;
-  order?: "DATE" | "HEARTS_COUNT";
+  orderStandard?: "DATE" | "HEARTS_COUNT";
   sortType?: "DESC" | "ASC";
 };
 
 const useReviews = ({
   offset = 0,
   limit = 10,
-  order = "DATE",
+  orderStandard = "DATE",
   sortType = "DESC",
 }: UseReviewsProps) => {
-  return useQuery(["review", "all", offset, limit, order, sortType]);
+  return useQuery(
+    ["review", "all", offset, limit, orderStandard, sortType],
+    () => getAllReview({ offset, limit, orderStandard, sortType })
+  );
 };
 
 export default useReviews;
