@@ -1,7 +1,12 @@
 import axios from "axios";
 import api from ".";
 import type { AxiosResponse } from "axios";
-import type { Review, ReviewPostType } from "./Interface/review.interface";
+import type {
+  Review,
+  ReviewPostType,
+  ReviewParameterType,
+  ReviewListType,
+} from "./Interface/review.interface";
 
 export const getBestReview = async (num: number): Promise<Review[]> => {
   const { data } = await axios.get<Review[]>("/reviews/bestReviews", {
@@ -61,5 +66,14 @@ export const createReviewLike = async (rid: string): Promise<Review> => {
 
 export const cancelReviewLike = async (rid: string): Promise<Review> => {
   const { data } = await api.delete<Review>(`/reviews/${rid}/heart`);
+  return data;
+};
+
+export const getAllReview = async (
+  params: ReviewParameterType
+): Promise<ReviewListType> => {
+  const { data } = await api.get<ReviewListType>(`/reviews`, {
+    params,
+  });
   return data;
 };

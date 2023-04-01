@@ -32,3 +32,11 @@ export type ReviewParameterType = {
   orderStandard: string;
   sortType: string;
 };
+
+type ListType = {
+  hasNext: boolean;
+  totalElements: number;
+  totalPages: number;
+  uuid: string;
+};
+export type ReviewListType = Omit<Review, "createdAt"> & ListType;
