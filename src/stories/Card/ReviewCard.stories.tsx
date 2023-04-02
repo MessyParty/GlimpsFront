@@ -18,9 +18,7 @@ export const Default: ComponentStory<typeof ReviewCard> = () => {
       sx={{
         height: "370px",
       }}
-      ratingSx={{
-        fontSize: "36px",
-      }}
+      tags={["text1"]}
     />
   );
 };
