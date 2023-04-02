@@ -71,8 +71,8 @@ export const cancelReviewLike = async (rid: string): Promise<Review> => {
 
 export const getAllReview = async (
   params: ReviewParameterType
-): Promise<ReviewListType> => {
-  const { data } = await api.get<ReviewListType>(`/reviews`, {
+): Promise<ReviewListType[]> => {
+  const { data } = await api.get<ReviewListType[]>(`/reviews`, {
     params,
   });
   return data;

@@ -10,7 +10,7 @@ interface ReviewCardProps extends CardProps {
   reviewTitle: string;
   author: string;
   score: number;
-  tags: string[];
+  tags?: string[];
   description?: string;
   imgSrc?: string;
   LikeButtonProps?: ComponentProps<typeof LikeButton>;
@@ -59,7 +59,7 @@ const ReviewCard2 = ({
           />
         </ReviewContent>
         <ReviewContent>
-          {tags.map((tag, index) => (
+          {tags?.map((tag, index) => (
             <Tag key={index} content={tag} />
           ))}
         </ReviewContent>
@@ -70,14 +70,7 @@ const ReviewCard2 = ({
         </ReviewContent>
       </PerfumeReview>
       <PerfumeImg>
-        <CardMedia
-          component="img"
-          image={imgSrc}
-          alt="review image"
-          width={500}
-          height={500}
-          style={{ minWidth: "500px", minHeight: "500px" }}
-        />
+        <CardMedia component="img" image={imgSrc} alt="review image" />
         <div className="likes">
           <LikeButton {...LikeButtonProps} />
         </div>
@@ -90,9 +83,11 @@ export default ReviewCard2;
 
 const Container = styled(Card)`
   display: flex;
+  padding-top: 10px;
 
   & > .perfume-img {
     position: relative;
+    aspect-ratio: 4/3;
 
     & > .like-button {
       position: absolute;
@@ -103,7 +98,7 @@ const Container = styled(Card)`
 `;
 
 const PerfumeReview = styled.div`
-  flex: 1;
+  flex-basis: 55%;
 `;
 
 const ReviewContent = styled.div`
@@ -141,8 +136,16 @@ const Quote = styled.div`
 `;
 
 const PerfumeImg = styled.div`
+  flex-grow: 1;
+  flex-basis: 25%;
   position: relative;
   padding-left: 55px;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
   & > .likes {
     position: absolute;

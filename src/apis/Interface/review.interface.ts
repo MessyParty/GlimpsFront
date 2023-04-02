@@ -38,5 +38,7 @@ type ListType = {
   totalElements: number;
   totalPages: number;
   uuid: string;
+  photoUrl: string[];
+  overallRating: number;
 };
 export type ReviewListType = Omit<Review, "createdAt"> & ListType;

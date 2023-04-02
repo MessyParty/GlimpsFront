@@ -4,12 +4,17 @@ import { getBestReview, getAllReview } from "@/apis/review";
 import useReviews from "@/hooks/queries/useReviews";
 import useBestReviews from "@/hooks/queries/useBestReviews";
 import ReviewCard from "@/components/ReviewCard";
-import { Divider } from "@mui/material";
+import { Divider, Pagination } from "@mui/material";
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useState } from "react";
+import SimpleReviewCard from "@/components/SimpleReviewCard";
+
+const DEFAULT_IMG =
+  "https://cdn.pixabay.com/photo/2018/01/10/13/47/essential-oil-3073901_960_720.jpg";
 
 const ReviewPage = () => {
-  const { data, isLoading } = useReviews({ offset: 0, limit: 10 });
+  const [offset, setOffset] = useState<number>(0);
+  const { data, isLoading } = useReviews({ offset, limit: 10 });
   const { data: bestData, isLoading: isBestLoading } = useBestReviews(3);
 
   return (
@@ -24,7 +29,7 @@ const ReviewPage = () => {
                     author={nickname}
                     score={overallRatings}
                     description={body}
-                    imgSrc={photoUrls[0]}
+                    imgSrc={photoUrls[0] ?? DEFAULT_IMG}
                   />
                   <Divider sx={{ borderColor: "black" }} />
                 </React.Fragment>
@@ -32,6 +37,30 @@ const ReviewPage = () => {
             )
           : null}
       </BestArea>
+      <AllArea>
+        {data
+          ? data.map(
+              ({ uuid, photoUrl, title, overallRating, body, heartCnt }) => (
+                <React.Fragment key={uuid}>
+                  <SimpleReviewCard
+                    imgSrc={photoUrl[0] ?? DEFAULT_IMG}
+                    title={title}
+                    score={overallRating}
+                    body={body}
+                    likeCnt={heartCnt}
+                  />
+                </React.Fragment>
+              )
+            )
+          : null}
+        {data ? (
+          <Pagination
+            showFirstButton
+            showLastButton
+            count={data[0].totalPages}
+          />
+        ) : null}
+      </AllArea>
     </Wrapper>
   );
 };
@@ -71,8 +100,12 @@ const Wrapper = styled.section`
   padding: 0 1rem;
 `;
 
-const BestArea = styled.div`
+const Area = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
 `;
+
+const BestArea = styled(Area)``;
+
+const AllArea = styled(Area)``;
