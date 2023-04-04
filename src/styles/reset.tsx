@@ -30,6 +30,7 @@ const reset = css`
   }
   body {
     line-height: 1;
+    min-width: 1200px;
   }
   ol, ul {
     list-style: none;

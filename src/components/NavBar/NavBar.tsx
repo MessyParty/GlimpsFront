@@ -1,22 +1,25 @@
 import SearchIcon from "@mui/icons-material/Search";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { IconButton } from "@mui/material";
-
-import Logo from "@/components/CustomIcon/Logo";
-
 import { useRouter } from "next/router";
+import Logo from "@/components/CustomIcon/Logo";
 import { ERROR_PAGE_REGEX } from "@/constants/regex";
+
 import { useRecoilState } from "recoil";
 import { modalOpenState } from "@/recoil/modalState";
 import SearchModal from "@/components/SearchModal";
+
 
 const NavBar = () => {
   const router = useRouter();
 
   const [isOpen, setIsOpen] = useRecoilState(modalOpenState);
+
+  const moveToMyPage = () => {
+    router.push("/mypage");
+  };
 
   if (ERROR_PAGE_REGEX.test(router.pathname)) return null;
 
@@ -43,7 +46,7 @@ const NavBar = () => {
             <SearchIcon />
             <SearchModal />
           </IconButton>
-          <IconButton color="primary" aria-label="user">
+          <IconButton color="primary" aria-label="user" onClick={moveToMyPage}>
             <PersonOutlineIcon />
           </IconButton>
         </Utils>

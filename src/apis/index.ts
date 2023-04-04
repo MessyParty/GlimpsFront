@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import "dotenv/config";
 import { getCookie } from "@/utils/cookie";
 import { ACCESS_TOKEN_COOKIE } from "@/constants/auth";
-import useRefreshToken from "@/hooks/useRefreshToken";
+import useRefreshToken from "@/hooks/queries/useRefreshToken";
 
 const accessToken = getCookie(ACCESS_TOKEN_COOKIE);
 
