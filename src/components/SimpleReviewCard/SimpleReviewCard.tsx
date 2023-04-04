@@ -10,6 +10,7 @@ interface SimpleReviewCardProps {
   title: string;
   score: number;
   body?: string;
+  nickname?: string;
 }
 
 const SimpleReviewCard = ({
@@ -18,6 +19,7 @@ const SimpleReviewCard = ({
   title,
   score,
   body,
+  nickname,
 }: SimpleReviewCardProps) => {
   return (
     <CardWrapper>
@@ -30,11 +32,14 @@ const SimpleReviewCard = ({
         </div>
       </ImgWrapper>
       <InfoWrapper>
-        <Rating value={score} precision={0.5} />
-        <Typography variant="h6" fontWeight="bolder">
+        <Rating value={score} precision={0.5} sx={{ fontSize: "30px" }} />
+        <Typography variant="h5" fontWeight="bolder">
           {title}
         </Typography>
         <Typography>{body}</Typography>
+        <Meta>
+          <Typography>by {nickname}</Typography>
+        </Meta>
       </InfoWrapper>
     </CardWrapper>
   );
@@ -47,6 +52,9 @@ const CardWrapper = styled.div`
   align-items: flex-start;
   width: 100%;
   gap: 10px;
+  padding: 10px 0;
+  height: 300px;
+  max-height: 300px;
 `;
 
 const ImgWrapper = styled.div`
@@ -58,8 +66,10 @@ const ImgWrapper = styled.div`
   }
   gap: 10px;
   max-width: 30%;
+  height: 100%;
   & > .imgs {
     width: 100%;
+    height: 100%;
     img {
       width: 100%;
       height: 100%;
@@ -73,4 +83,13 @@ const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  height: 100%;
+`;
+
+const Meta = styled.div`
+  flex: 1;
+  align-self: stretch;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 `;

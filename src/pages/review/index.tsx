@@ -4,7 +4,7 @@ import { getBestReview, getAllReview } from "@/apis/review";
 import useReviews from "@/hooks/queries/useReviews";
 import useBestReviews from "@/hooks/queries/useBestReviews";
 import ReviewCard from "@/components/ReviewCard";
-import { Divider, Pagination } from "@mui/material";
+import { Divider } from "@mui/material";
 import styled from "@emotion/styled";
 import React, { useState } from "react";
 import SimpleReviewCard from "@/components/SimpleReviewCard";
@@ -13,9 +13,9 @@ const DEFAULT_IMG =
   "https://cdn.pixabay.com/photo/2018/01/10/13/47/essential-oil-3073901_960_720.jpg";
 
 const ReviewPage = () => {
-  const [offset, setOffset] = useState<number>(0);
-  const { data, isLoading } = useReviews({ offset, limit: 10 });
-  const { data: bestData, isLoading: isBestLoading } = useBestReviews(3);
+  const [order, setOrder] = useState<"DATE" | "HEARTS_COUNT">("DATE");
+  const { data } = useReviews({ offset: 0, limit: 5, orderStandard: order });
+  const { data: bestData } = useBestReviews(3);
 
   return (
     <Wrapper>
@@ -37,10 +37,19 @@ const ReviewPage = () => {
             )
           : null}
       </BestArea>
+      <AllControlSection></AllControlSection>
       <AllArea>
         {data
           ? data.map(
-              ({ uuid, photoUrl, title, overallRating, body, heartCnt }) => (
+              ({
+                uuid,
+                photoUrl,
+                title,
+                overallRating,
+                body,
+                heartCnt,
+                nickname,
+              }) => (
                 <React.Fragment key={uuid}>
                   <SimpleReviewCard
                     imgSrc={photoUrl[0] ?? DEFAULT_IMG}
@@ -48,18 +57,13 @@ const ReviewPage = () => {
                     score={overallRating}
                     body={body}
                     likeCnt={heartCnt}
+                    nickname={nickname}
                   />
+                  <Divider sx={{ borderColor: "black" }} />
                 </React.Fragment>
               )
             )
           : null}
-        {data ? (
-          <Pagination
-            showFirstButton
-            showLastButton
-            count={data[0].totalPages}
-          />
-        ) : null}
       </AllArea>
     </Wrapper>
   );
@@ -76,7 +80,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       queryFn: () => getBestReview(3),
     }),
     queryClient.prefetchQuery({
-      queryKey: ["review", "all", 0, 10, "DATE", "DESC"],
+      queryKey: ["review", "all", 0, 5, "DATE", "DESC"],
       queryFn: () =>
         getAllReview({
           limit: 10,
@@ -109,3 +113,9 @@ const Area = styled.div`
 const BestArea = styled(Area)``;
 
 const AllArea = styled(Area)``;
+
+const AllControlSection = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
