@@ -19,7 +19,6 @@ const LoginModal = () => {
       <Typography fontSize={20} padding="14px 50px 80px 50px">
         로그인 후 나만의 향수를 찾아보세요!
       </Typography>
-      {/* TODO: 아이콘 레이아웃 수정 필요 */}
       <KakaoLoginButton startIcon={<KakaoLogin />} onClick={login}>
         <Typography fontSize={18}>카카오로 로그인하기</Typography>
       </KakaoLoginButton>
@@ -40,4 +39,9 @@ const KakaoLoginButton = styled(Button)`
   width: 300px;
   height: 54px;
   background-color: #fee500;
+
+  & > .MuiButton-startIcon {
+    position: absolute;
+    left: 1.5rem;
+  }
 `;

@@ -38,7 +38,7 @@ export default function Home() {
       >
         모달창 열기
       </Button>
-      <LoginRequiredModal />
+      <LoginModal />
     </>
   );
 }
