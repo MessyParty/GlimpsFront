@@ -17,13 +17,17 @@ const Modal = ({ title, content, actions, ...props }: ModalProps) => {
   };
 
   return (
-    <Dialog {...props} open={isOpen} onClose={handleClose}>
+    <Dialog
+      {...props}
+      open={isOpen}
+      onClose={handleClose}
+      sx={{ "& .MuiPaper-root": { borderRadius: "0px" } }}
+    >
       {title ? title : null}
       {content ? (
         <DialogContent
           style={{
-            border: "1px solid",
-            borderRadius: 0,
+            border: "2px solid",
           }}
         >
           <IconButton onClick={handleClose} style={{ float: "right" }}>
