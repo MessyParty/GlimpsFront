@@ -3,8 +3,8 @@ import styled from "@emotion/styled";
 import { Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import KakaoLogin from "../CustomIcon/KakaoLogin";
-import Logo from "../CustomIcon/Logo";
 import Modal from "../Modal";
+import Image from "next/image";
 
 const LoginModal = () => {
   const router = useRouter();
@@ -15,7 +15,7 @@ const LoginModal = () => {
 
   const content = (
     <Container>
-      <Logo style={{ width: "154px", height: "auto", padding: "0 100px" }} />
+      <Image src="/glims-logo.svg" alt="logo" width={96} height={54} />
       <Typography fontSize={20} padding="14px 50px 80px 50px">
         로그인 후 나만의 향수를 찾아보세요!
       </Typography>
