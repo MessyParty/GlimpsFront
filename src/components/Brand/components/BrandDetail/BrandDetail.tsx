@@ -1,6 +1,7 @@
 import useObserver from "@/hooks/useObserver";
 import { useHandleScroll } from "@/hooks/useHandleScroll";
 import useInfiniteScroll from "@/hooks/queries/useInfiniteScroll";
+import BrandCard from "@/components/BrandCard";
 
 export default function BrandDetail(): JSX.Element {
   const { data, isSuccess, hasNextPage, fetchNextPage, isFetchingNextPage } =
@@ -16,9 +17,8 @@ export default function BrandDetail(): JSX.Element {
         data?.pages.map((page, i) => (
           <div key={i}>
             {page?.length ? (
-              <p>data</p>
+              <BrandCard results={page.props.items} />
             ) : (
-              // <BrandCard results={page.props.items} />
               <p>No result found</p>
             )}
           </div>
