@@ -24,9 +24,10 @@ export default function SearchModal() {
     const { option, name } = data;
 
     if (option && name) {
+      const query = { [option]: name };
       Router.push({
-        pathname: `/search`,
-        query: { [option]: name },
+        pathname: `/perfumes/search`,
+        query,
       });
     }
   };
