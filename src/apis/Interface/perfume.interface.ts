@@ -1,4 +1,10 @@
 export type Perfume = {
-  perfumeBrand: string;
+  brandId: number;
+  brandName: string;
+  longevityRatings: number;
+  overallRatings: number;
   perfumeName: string;
+  reviewCnt: number;
+  sillageRatings: number;
+  uuid: string;
 };
