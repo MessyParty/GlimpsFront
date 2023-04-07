@@ -1,22 +1,19 @@
 import { GetServerSideProps } from "next";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 import BrandDetail from "@/components/Brand/components/BrandDetail";
-import styled from "@emotion/styled";
+import TitleBox from "@/components/TitleBox";
+import { getPerfume } from "@/apis/perfume";
 
 export const DetailPage = () => {
   return (
     <>
-      <BrandTitleBox>
-        <p className="brand-en">brandName</p>
-        <p className="brand-kr">brandNameKr</p>
-      </BrandTitleBox>
+      <TitleBox title="brandName" subtitle="brandNameKr" />
       <BrandDetail />
     </>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const { pid } = params as { pid: string };
+export const getServerSideProps: GetServerSideProps = async () => {
   const queryClient = new QueryClient();
 
   return {
@@ -25,20 +22,3 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     },
   };
 };
-
-const BrandTitleBox = styled.div`
-  width: 330px;
-  padding: 2rem 0;
-  margin: 2.5rem 0;
-  border-top: 10px solid #000;
-  border-bottom: 10px solid #000;
-
-  & > .brand-en {
-    font-size: 30px;
-    font-weight: bold;
-  }
-
-  & > .brand-kr {
-    font-size: 24px;
-  }
-`;
