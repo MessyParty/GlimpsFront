@@ -13,11 +13,11 @@ import SearchModal from "@/components/SearchModal";
 const NavBar = () => {
   const router = useRouter();
 
+  const [isOpen, setIsOpen] = useRecoilState(modalOpenState);
+
   const moveToMyPage = () => {
     router.push("/mypage");
   };
-
-  const [isOpen, setIsOpen] = useRecoilState(modalOpenState);
 
   if (ERROR_PAGE_REGEX.test(router.pathname)) return null;
 

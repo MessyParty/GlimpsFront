@@ -33,36 +33,35 @@ export default function SearchModal() {
   };
 
   const content = (
-    <>
-      <FormProvider {...methods}>
-        <Container>
-          <LogoBox>
-            <Logo
-              style={{ width: "155px", height: "auto", margin: "1rem auto" }}
-            />
-            <Typography>객관화되는 나의 향, 나의 취향</Typography>
-          </LogoBox>
-          <Form onSubmit={methods.handleSubmit(onSearch)}>
-            <SearchSelect />
-            <SearchNameInput />
-            <label htmlFor="search" className="search-icon">
-              <IconButton
-                color="primary"
-                aria-label="search"
-                type="submit"
-                onClick={onSearch}
-              >
-                <SearchIcon />
-              </IconButton>
-            </label>
-          </Form>
-        </Container>
-      </FormProvider>
-    </>
+    <FormProvider {...methods}>
+      <Container>
+        <LogoBox>
+          <Logo
+            style={{ width: "155px", height: "auto", margin: "1rem auto" }}
+          />
+          <Typography>객관화되는 나의 향, 나의 취향</Typography>
+        </LogoBox>
+        <Form onSubmit={methods.handleSubmit(onSearch)}>
+          <SearchSelect />
+          <SearchNameInput />
+          <label htmlFor="search" className="search-icon">
+            <IconButton
+              color="primary"
+              aria-label="search"
+              type="submit"
+              onClick={onSearch}
+            >
+              <SearchIcon />
+            </IconButton>
+          </label>
+        </Form>
+      </Container>
+    </FormProvider>
   );
 
   return <Modal open={true} content={content}></Modal>;
 }
+
 const Container = styled.div`
   width: 550px;
   height: 280px;
