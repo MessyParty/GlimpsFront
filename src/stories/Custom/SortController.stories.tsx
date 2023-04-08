@@ -14,3 +14,11 @@ export const Default: ComponentStory<typeof SortController> = () => {
 
   return <SortController orderCb={setValue} />;
 };
+
+export const WithButton: ComponentStory<typeof SortController> = () => {
+  const [_, setValue] = useState<OrderType>("DATE");
+
+  return (
+    <SortController orderCb={setValue} addBtn pid="test1" pName="channel" />
+  );
+};
