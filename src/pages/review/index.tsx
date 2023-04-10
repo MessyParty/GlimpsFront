@@ -9,6 +9,7 @@ import styled from "@emotion/styled";
 import React, { useState } from "react";
 import SimpleReviewCard from "@/components/SimpleReviewCard";
 import SortController from "@/components/SortController";
+import Spacer from "@/components/Spacer";
 
 const DEFAULT_IMG =
   "https://cdn.pixabay.com/photo/2018/01/10/13/47/essential-oil-3073901_960_720.jpg";
@@ -69,6 +70,7 @@ const ReviewPage = () => {
             )
           : null}
       </AllArea>
+      <Spacer y={2} />
     </Wrapper>
   );
 };
