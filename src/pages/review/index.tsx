@@ -4,7 +4,7 @@ import { getBestReview, getAllReview } from "@/apis/review";
 import useReviews from "@/hooks/queries/useReviews";
 import useBestReviews from "@/hooks/queries/useBestReviews";
 import ReviewCard from "@/components/ReviewCard";
-import { Divider } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import React, { useState } from "react";
 import SimpleReviewCard from "@/components/SimpleReviewCard";
@@ -21,6 +21,18 @@ const ReviewPage = () => {
 
   return (
     <Wrapper>
+      <Spacer y={4} />
+      <Header>
+        <HeaderDivider />
+        <Spacer />
+        <div className="title">
+          <Typography variant="h4">REVIEW</Typography>
+          <Typography variant="h6">BEST AND ALL</Typography>
+        </div>
+        <Spacer />
+        <HeaderDivider />
+      </Header>
+      <Spacer y={4} />
       <BestArea>
         {bestData
           ? bestData.map(
@@ -108,6 +120,22 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   padding: 0 1rem;
+`;
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: column;
+  & > .title {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+const HeaderDivider = styled(Divider)`
+  width: 326px;
+  height: 10px;
+  border-color: black;
+  background-color: black;
 `;
 
 const Area = styled.div`
