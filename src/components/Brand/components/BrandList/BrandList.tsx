@@ -2,24 +2,20 @@ import React from "react";
 import styled from "@emotion/styled";
 
 type PerfumeData = {
-  id: number;
-  brand: string;
-  brandKr: string;
+  brandId: number;
+  brandName: string;
 };
 
 interface BrandListProps {
-  perfumeList: PerfumeData[];
+  filteredBrands: PerfumeData[];
 }
 
-export default function BrandList({ perfumeList }: BrandListProps) {
+export default function BrandList({ filteredBrands }: BrandListProps) {
   return (
     <BrandContainer>
-      {perfumeList?.map((perfume) => (
-        <div key={perfume.id}>
-          <button className="perfume-button">
-            <BrandEn>{perfume.brand}</BrandEn>
-            <BrandKr>{perfume.brandKr}</BrandKr>
-          </button>
+      {filteredBrands?.map(({ brandId, brandName }) => (
+        <div key={brandId}>
+          <button className="perfume-brand">{brandName}</button>
         </div>
       ))}
     </BrandContainer>

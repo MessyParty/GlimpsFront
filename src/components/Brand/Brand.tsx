@@ -1,27 +1,60 @@
-import { brandData } from "@root/__mocks__/brandData";
 import React from "react";
-import AlphabetButton from "./components/AlpabetButton/index";
-import BrandList from "./components/BrandList";
 import styled from "@emotion/styled";
+import { useQuery } from "@tanstack/react-query";
+
+import { getBrand } from "@/apis/brand";
 import useMoveScroll from "@/hooks/useMoveScroll";
+
+import AlphabetButton from "@/components/Brand/components/AlpabetButton";
+import BrandList from "@/components/Brand/components/BrandList";
+
+const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 export default function Brand() {
   const { scrollRef, onMoveToElement } = useMoveScroll();
+  const { data, isLoading, isError } = useQuery(["brand"], getBrand);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error occurred!</div>;
+  }
+
+  const sortedBrands = data?.sort((a, b) =>
+    a.brandName.localeCompare(b.brandName),
+  );
 
   return (
     <>
-      <AlphabetButton onMoveToElement={onMoveToElement} />
-      {brandData.map((data, index) => (
-        <BrandBox key={data.id}>
-          <BrandListTitle
-            id={data.alphabet}
-            ref={(ref) => (scrollRef.current[index] = ref as HTMLDivElement)}
-          >
-            {data.alphabet}
-          </BrandListTitle>
-          <BrandList perfumeList={data.perfumeList} />
-        </BrandBox>
-      ))}
+      <AlphabetButton onMoveToElement={onMoveToElement} alphabet={ALPHABET} />
+      {Array.from(ALPHABET).map((letter, index) => {
+        const filteredBrands = sortedBrands?.filter(
+          (brand) => brand.brandName.toUpperCase().indexOf(letter) === 0,
+        );
+        if (filteredBrands?.length === 0) {
+          return (
+            <BrandBox key={letter}>
+              <BrandListTitle
+                id={letter}
+                ref={(ref) =>
+                  (scrollRef.current[index] = ref as HTMLDivElement)
+                }
+              >
+                {letter}
+              </BrandListTitle>
+              <p>데이터가 없습니다.</p>
+            </BrandBox>
+          );
+        } else {
+          return (
+            <BrandBox key={letter}>
+              <BrandListTitle>{letter}</BrandListTitle>
+              <BrandList filteredBrands={filteredBrands} />
+            </BrandBox>
+          );
+        }
+      })}
     </>
   );
 }

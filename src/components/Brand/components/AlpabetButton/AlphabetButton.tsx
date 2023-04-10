@@ -6,19 +6,23 @@ import { brandData } from "@root/__mocks__/brandData";
 
 type MoveScrollProps = {
   onMoveToElement: (i: number) => void;
+  alphabet: string;
 };
 
-export default function AlphabetButton({ onMoveToElement }: MoveScrollProps) {
+export default function AlphabetButton({
+  onMoveToElement,
+  alphabet = "",
+}: MoveScrollProps) {
   return (
     <ButtonList>
-      {brandData.map((data, index) => (
-        <li key={data.id}>
+      {Array.from(alphabet).map((letter, index) => (
+        <li key={letter}>
           <Button
             variant="outlined"
             size="large"
             onClick={() => onMoveToElement(index)}
           >
-            {data.alphabet}
+            {letter}
           </Button>
         </li>
       ))}
