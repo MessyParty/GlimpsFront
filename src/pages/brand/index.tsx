@@ -12,7 +12,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   await Promise.allSettled([
     queryClient.prefetchQuery({
-      queryKey: ["brand", "best"],
+      queryKey: ["brand"],
       queryFn: () => getBrand(),
     }),
   ]);
