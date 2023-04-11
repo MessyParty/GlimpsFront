@@ -1,16 +1,13 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { getPerfume } from "@/apis/perfume";
+import { searchPerfumes } from "@/apis/perfume";
 
-const useInfiniteScroll = () => {
+const useInfiniteScroll = (brandName: string) => {
   return useInfiniteQuery(
-    ["perfume"],
-    ({ pageParam = 1 }) => getPerfume(pageParam),
+    ["searchPerfumesInfinite", brandName],
+    ({ pageParam = 1 }) => searchPerfumes(brandName, pageParam),
     {
-      getNextPageParam: (lastPage, allPages) => {
-        const nextPage = allPages.length + 1;
-        return lastPage?.length !== 0 ? nextPage : undefined;
-      },
+      getNextPageParam: (lastPage, pages) => lastPage.nextPage,
     },
   );
 };
