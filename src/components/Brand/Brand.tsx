@@ -32,28 +32,21 @@ export default function Brand() {
         const filteredBrands = sortedBrands?.filter(
           (brand) => brand.brandName.toUpperCase().indexOf(letter) === 0,
         );
-        if (filteredBrands?.length === 0) {
-          return (
-            <BrandBox key={letter}>
-              <BrandListTitle
-                id={letter}
-                ref={(ref) =>
-                  (scrollRef.current[index] = ref as HTMLDivElement)
-                }
-              >
-                {letter}
-              </BrandListTitle>
+        return (
+          <BrandBox key={letter}>
+            <BrandListTitle
+              id={letter}
+              ref={(ref) => (scrollRef.current[index] = ref as HTMLDivElement)}
+            >
+              {letter}
+            </BrandListTitle>
+            {filteredBrands?.length === 0 ? (
               <p>데이터가 없습니다.</p>
-            </BrandBox>
-          );
-        } else {
-          return (
-            <BrandBox key={letter}>
-              <BrandListTitle>{letter}</BrandListTitle>
+            ) : (
               <BrandList filteredBrands={filteredBrands} />
-            </BrandBox>
-          );
-        }
+            )}
+          </BrandBox>
+        );
       })}
     </>
   );
