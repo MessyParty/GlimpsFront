@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import Link from "next/link";
 
 type PerfumeData = {
   brandId: number;
@@ -15,7 +16,12 @@ export default function BrandList({ filteredBrands }: BrandListProps) {
     <BrandContainer>
       {filteredBrands?.map(({ brandId, brandName }) => (
         <div key={brandId}>
-          <button className="perfume-brand">{brandName}</button>
+          <Link
+            href={`/perfumes?brand=${encodeURIComponent(brandName)}`}
+            legacyBehavior
+          >
+            <a className="perfume-brand">{brandName}</a>
+          </Link>
         </div>
       ))}
     </BrandContainer>
