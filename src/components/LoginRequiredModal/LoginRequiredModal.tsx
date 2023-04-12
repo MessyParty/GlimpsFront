@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { Button, Typography } from "@mui/material";
 import Logo from "../CustomIcon/Logo";
 import Modal from "../Modal";
+import { MODAL_KEYS } from "@/constants/modalKeys";
 
 const LoginRequiredModal = () => {
   const content = (
@@ -16,7 +17,14 @@ const LoginRequiredModal = () => {
       <ConfirmButton>확인</ConfirmButton>
     </Container>
   );
-  return <Modal open={true} content={content}></Modal>;
+
+  return (
+    <Modal
+      modalKey={MODAL_KEYS.loginRequired}
+      open={true}
+      content={content}
+    ></Modal>
+  );
 };
 
 export default LoginRequiredModal;

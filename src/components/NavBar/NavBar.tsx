@@ -14,18 +14,21 @@ import { useRecoilValue } from "recoil";
 import { loginState } from "@/recoil/auth";
 import { LoginOutlined, LogoutOutlined } from "@mui/icons-material";
 import useLogoutQuery from "@/hooks/queries/useLogoutQuery";
+import useModal from "@/hooks/useModal";
+import { MODAL_KEYS } from "@/constants/modalKeys";
 
 const NavBar = () => {
   const router = useRouter();
   const isLogined = useRecoilValue(loginState);
   const [open, setOpen] = useRecoilState(modalOpenState);
+  const loginModal = useModal(MODAL_KEYS.login);
 
   const mypage = () => {
     router.push("/mypage");
   };
 
   const login = () => {
-    // TODO: modal open
+    loginModal.openModal();
   };
 
   const logout = () => {
