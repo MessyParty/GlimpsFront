@@ -2,7 +2,7 @@
 import styled from "@emotion/styled";
 import LikeButton from "../LikeButton";
 import Rating from "../Rating";
-import { Typography } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 
 interface SimpleReviewCardProps {
   imgSrc: string;
@@ -11,6 +11,7 @@ interface SimpleReviewCardProps {
   score: number;
   body?: string;
   nickname?: string;
+  createdAt?: string;
 }
 
 const SimpleReviewCard = ({
@@ -20,6 +21,7 @@ const SimpleReviewCard = ({
   score,
   body,
   nickname,
+  createdAt,
 }: SimpleReviewCardProps) => {
   return (
     <CardWrapper>
@@ -38,6 +40,12 @@ const SimpleReviewCard = ({
         </Typography>
         <Typography>{body}</Typography>
         <Meta>
+          {createdAt ? (
+            <>
+              <Typography>{createdAt}</Typography>
+              <Divider orientation="vertical" flexItem />
+            </>
+          ) : null}
           <Typography>by {nickname}</Typography>
         </Meta>
       </InfoWrapper>

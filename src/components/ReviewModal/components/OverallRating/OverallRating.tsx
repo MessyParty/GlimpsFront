@@ -6,7 +6,7 @@ const OverallRating = () => {
   const { control } = useFormContext();
 
   return (
-    <Wrapper>
+    <div>
       <Rating
         controlProps={{
           control,
@@ -16,10 +16,8 @@ const OverallRating = () => {
         precision={0.5}
         sx={{ fontSize: "48px" }}
       />
-    </Wrapper>
+    </div>
   );
 };
 
 export default OverallRating;
-
-const Wrapper = styled.div``;
