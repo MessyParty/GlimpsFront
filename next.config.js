@@ -10,5 +10,13 @@ const nextConfig = {
 
     return config;
   },
+  rewrites: async () => {
+    return [
+      {
+        source: "/api/v1/:path*",
+        destination: "https://dev.glims.store/api/v1/:path*",
+      },
+    ];
+  },
 };
 module.exports = nextConfig;

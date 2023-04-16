@@ -24,11 +24,14 @@ const api = axios.create({
   },
 });
 
-api.interceptors.response.use(async (error) => {
-  if (isAuthError(error)) {
-    useRefreshToken();
+api.interceptors.response.use(
+  (res) => res,
+  async (error) => {
+    if (isAuthError(error)) {
+      useRefreshToken();
+    }
+    return Promise.reject(error);
   }
-  return Promise.reject(error);
-});
+);
 
 export default api;

@@ -26,6 +26,7 @@ const MuiButton = ({
       size={size}
       disabled={disabled}
       customcolor={customColor}
+      fontcolor={customTextColor}
       {...props}
     >
       {children}
