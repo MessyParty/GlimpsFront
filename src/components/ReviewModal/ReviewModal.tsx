@@ -8,6 +8,7 @@ import TitleInput from "./components/TitleInput";
 import Description from "./components/Description";
 import ImageInput from "./components/ImageInput";
 import { Divider, Typography } from "@mui/material";
+import useCreateReview from "@/hooks/queries/useCreateReview";
 import Button from "../Button";
 import Spacer from "../Spacer";
 
@@ -37,9 +38,11 @@ const ReviewModal = ({
     control: methods.control,
     name: ["tags", "title", "body"],
   });
+  const { mutate } = useCreateReview();
 
   const onSubmit = (data: ReviewFormType) => {
-    console.log(data);
+    // console.log(data);
+    mutate({ perfumeUuid, ...data });
   };
 
   return (
