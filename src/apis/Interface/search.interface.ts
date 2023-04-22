@@ -1,5 +1,5 @@
 export type Search = {
-  perfumeBrand?: string;
-  perfumeName?: string;
+  brand?: string;
+  perfume?: string;
   notes?: string;
 };
