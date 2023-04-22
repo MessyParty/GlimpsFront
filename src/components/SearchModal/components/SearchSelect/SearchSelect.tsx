@@ -1,33 +1,74 @@
-import SingleSelect from "../../../SingleSelect/SingleSelect";
-import { useFormContext } from "react-hook-form";
-
+import { useEffect } from "react";
 import styled from "@emotion/styled";
+import { Input, MenuItem, Select } from "@mui/material";
+import { useFormContext } from "react-hook-form";
+import FormControl from "@mui/material/FormControl";
+import { SelectChangeEvent } from "@mui/material";
 
-const OPTION: { value: string; name: string }[] = [
-  { value: "brandname", name: "Brand" },
-  { value: "perfumename", name: "Perfume" },
+const OPTIONS: { value: string; name: string }[] = [
+  { value: "brand", name: "Brand" },
+  { value: "perfume", name: "Perfume" },
   { value: "notes", name: "Notes" },
 ];
 
-export default function SearchSelect() {
-  const { control } = useFormContext();
+type OptionType = "brand" | "perfume" | "notes";
+
+interface SearchSelectProps {
+  optionCb: React.Dispatch<React.SetStateAction<OptionType>>;
+}
+
+export default function SearchSelect({ optionCb }: SearchSelectProps) {
+  const methods = useFormContext();
+  const { setValue } = methods;
+
+  useEffect(() => {
+    setValue("option", "brand");
+  }, [setValue]);
+
+  const handleChange = (event: SelectChangeEvent<OptionType>) => {
+    const value = event.target.value as OptionType;
+    setValue("option", value);
+    optionCb(value);
+  };
+
   return (
-    <SingleSelect
-      wrapper={Wrapper}
-      formProps={{
-        control,
-        name: "option",
-        rules: { required: "필수 선택값입니다!" },
-      }}
-      names={OPTION}
-      variant="outlined"
-      defaultValue="Brand"
-      style={{ borderRadius: 0, borderColor: "#000" }}
-    ></SingleSelect>
+    <Wrapper>
+      <FormControl fullWidth>
+        <Select
+          labelId="search-select-label"
+          id="search-select"
+          value={methods.watch("option")}
+          label="Option"
+          onChange={handleChange}
+          input={<CustomInput disableUnderline />}
+          style={{
+            padding: ".7rem 0",
+            borderRight: "1px solid #000",
+          }}
+        >
+          {OPTIONS.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
-  width: 30%;
-  max-width: 30%;
+  width: 137px;
+  max-width: 137px;
+`;
+
+const CustomInput = styled(Input)`
+  & > .MuiSelect-select {
+    padding-right: 0px;
+    padding-left: 32px;
+  }
+  & > .MuiSvgIcon-root {
+    right: 0;
+    left: 7px;
+  }
 `;
