@@ -2,15 +2,12 @@ import axios from "axios";
 import type { Search } from "./Interface/search.interface";
 
 export const getSearch = async (
-  brandname?: string,
-  perfumename?: string,
-  notes?: string,
+  option: string,
+  keyword: string,
 ): Promise<Search[]> => {
   const { data } = await axios.get<Search[]>(`/perfumes/search`, {
     params: {
-      brandname,
-      perfumename,
-      notes,
+      [option]: keyword,
     },
   });
   return data;
