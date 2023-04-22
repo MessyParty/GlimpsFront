@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Router from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 import styled from "@emotion/styled";
@@ -8,7 +8,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import { IconButton } from "@mui/material";
 
 import Logo from "@/components/CustomIcon/Logo";
-import Modal from "@/components/Modal";
 import SearchNameInput from "@/components/SearchModal/components/SearchNameInput";
 import SearchSelect from "@/components/SearchModal/components/SearchSelect";
 
@@ -19,12 +18,14 @@ export default function SearchModal() {
       name: "",
     },
   });
+  const [option, setOption] = useState<"brand" | "perfume" | "notes">("brand");
 
-  const onSearch = async (data) => {
-    const { option, name } = data;
+  const optionValue = methods.watch("option");
+  const nameValue = methods.watch("name");
 
-    if (option && name) {
-      const query = { [option]: name };
+  const onSearch = async () => {
+    if (optionValue && nameValue) {
+      const query = { [optionValue]: nameValue };
       Router.push({
         pathname: `/perfumes/search`,
         query,
@@ -32,7 +33,7 @@ export default function SearchModal() {
     }
   };
 
-  const content = (
+  return (
     <FormProvider {...methods}>
       <Container>
         <LogoBox>
@@ -41,8 +42,11 @@ export default function SearchModal() {
           />
           <Typography>객관화되는 나의 향, 나의 취향</Typography>
         </LogoBox>
-        <Form onSubmit={methods.handleSubmit(onSearch)}>
-          <SearchSelect />
+        <Form
+          onSubmit={methods.handleSubmit(onSearch)}
+          style={{ border: "1px solid #000", width: "500px", margin: "0 auto" }}
+        >
+          <SearchSelect optionCb={setOption} />
           <SearchNameInput />
           <label htmlFor="search" className="search-icon">
             <IconButton
@@ -58,8 +62,6 @@ export default function SearchModal() {
       </Container>
     </FormProvider>
   );
-
-  return <Modal open={true} content={content}></Modal>;
 }
 
 const Container = styled.div`
@@ -73,12 +75,10 @@ const Form = styled.form`
   align-items: center;
   justify-content: center;
   position: relative;
-
   & .css-qg300q-MuiInputBase-root-MuiOutlinedInput-root {
     border-radius: 0;
     width: 370px;
   }
-
   & .search-icon {
     position: absolute;
     top: 50%;

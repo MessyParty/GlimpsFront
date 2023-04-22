@@ -9,11 +9,12 @@ import { ERROR_PAGE_REGEX } from "@/constants/regex";
 import { useRecoilState } from "recoil";
 import { modalOpenState } from "@/recoil/modalState";
 import SearchModal from "@/components/SearchModal";
+import Modal from "../Modal";
 
 const NavBar = () => {
   const router = useRouter();
 
-  const [isOpen, setIsOpen] = useRecoilState(modalOpenState);
+  const [open, setOpen] = useRecoilState(modalOpenState);
 
   const moveToMyPage = () => {
     router.push("/mypage");
@@ -22,7 +23,7 @@ const NavBar = () => {
   if (ERROR_PAGE_REGEX.test(router.pathname)) return null;
 
   const handleOpen = () => {
-    setIsOpen(true);
+    setOpen(true);
   };
 
   return (
@@ -42,7 +43,7 @@ const NavBar = () => {
         <Utils>
           <IconButton color="primary" aria-label="search" onClick={handleOpen}>
             <SearchIcon />
-            <SearchModal />
+            <Modal open={open} content={<SearchModal />} />
           </IconButton>
           <IconButton color="primary" aria-label="user" onClick={moveToMyPage}>
             <PersonOutlineIcon />
