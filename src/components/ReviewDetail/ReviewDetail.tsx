@@ -9,39 +9,66 @@ import { CardMedia, CardProps } from "@mui/material";
 import Rating from "../Rating";
 import Tag from "../Tag";
 import Button from "../Button";
+import { deleteReview, updateReview } from "@/apis/review";
+import { useRecoilState } from "recoil";
+import Modal from "../Modal";
+import ReviewModal from "../ReviewModal";
+import { modalOpenState } from "@/recoil/modalState";
 
 interface ReviewDetailProps extends CardProps {
-  reviewTitle: string;
+  title: string;
   author: string;
   score: number;
+  longevityRatings: number;
+  sillageRatings: number;
   tags: string[];
   description?: string;
-  imgSrc?: string;
+  photoUrl?: string[];
   perfumeName: string;
   perfumeBrand: string;
   createAt: string;
+  id: string;
 }
 
 export default function ReviewDetail({
-  reviewTitle,
+  title,
   author,
   score,
+  sillageRatings,
+  longevityRatings,
   tags,
   description,
-  imgSrc,
+  photoUrl,
   perfumeName,
   perfumeBrand,
   createAt,
+  id,
   ...props
 }: ReviewDetailProps) {
   const router = useRouter();
+  const [open, setOpen] = useRecoilState(modalOpenState);
 
-  const handleDelete = () => {};
-  const handleUpdate = () => {};
+  const handleDelete = (id: string) => {
+    deleteReview(id);
+  };
+
+  const handleUpdateReview = async (rid, data) => {
+    try {
+      const updatedReview = await updateReview(rid, data);
+      console.log(updatedReview);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const moveToBack = () => {
     router.back();
   };
+
+  const date = new Date(createAt);
+  const formattedDate = `${date.getFullYear()}.${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}.${date.getDate().toString().padStart(2, "0")}`;
 
   return (
     <>
@@ -52,10 +79,10 @@ export default function ReviewDetail({
         </ReviewTopBox>
 
         <ReviewTitleBox>
-          <Typography fontSize={20}>{reviewTitle}</Typography>
+          <Typography fontSize={20}>{title}</Typography>
           <div className="review-info">
-            <Typography fontSize={18}>{createAt}</Typography>
-            <Typography fontSize={18}>{author}</Typography>
+            <Typography fontSize={18}>{formattedDate}</Typography>
+            <Typography fontSize={18}>by {author}</Typography>
           </div>
         </ReviewTitleBox>
         <Quote>
@@ -67,22 +94,25 @@ export default function ReviewDetail({
             margin="0 12px"
             paddingTop="20px"
           >
-            {reviewTitle}
+            {title}
           </Typography>
           <QuoteRight />
         </Quote>
         <div>
-          <CardMedia
-            component="img"
-            image={imgSrc}
-            alt="review image"
-            width={400}
-            height={400}
-            style={{ minWidth: "400px", minHeight: "400px" }}
-          />
+          {photoUrl?.map((photo, index) => (
+            <CardMedia
+              component="img"
+              src={photo}
+              alt="review image"
+              width={400}
+              height={400}
+              style={{ minWidth: "400px", minHeight: "400px" }}
+              key={index}
+            />
+          ))}
         </div>
         <ReviewContent>
-          {tags.map((tag, index) => (
+          {tags?.map((tag, index) => (
             <Tag key={index} content={tag} />
           ))}
         </ReviewContent>
@@ -117,7 +147,7 @@ export default function ReviewDetail({
           </div>
           <Rating
             sx={{ fontSize: "48px" }}
-            value={1.5}
+            value={score ?? 1.5}
             precision={0.5}
             size="large"
           />
@@ -133,7 +163,7 @@ export default function ReviewDetail({
           </div>
           <Rating
             sx={{ fontSize: "48px" }}
-            value={1.5}
+            value={longevityRatings ?? 1.5}
             precision={0.5}
             size="large"
           />
@@ -149,7 +179,7 @@ export default function ReviewDetail({
           </div>
           <Rating
             sx={{ fontSize: "48px" }}
-            value={1.5}
+            value={sillageRatings ?? 1.5}
             precision={0.5}
             size="large"
           />
@@ -169,10 +199,16 @@ export default function ReviewDetail({
               padding: "10px 40px",
               margin: "0 1rem",
             }}
-            onClick={handleUpdate}
+            onClick={() => handleUpdateReview(id, title)}
           >
             수정하기
           </Button>
+          <Modal
+            open={open}
+            content={<ReviewModal perfumeUuid={id} perfumeName={perfumeName} />}
+            fullWidth
+            maxWidth="lg"
+          />
           <Button
             variant="outlined"
             style={{
@@ -181,7 +217,7 @@ export default function ReviewDetail({
               padding: "10px 40px",
               margin: "0 1rem",
             }}
-            onClick={handleDelete}
+            onClick={() => handleDelete}
           >
             삭제하기
           </Button>
@@ -224,7 +260,7 @@ const ReviewTitleBox = styled.div`
     display: flex;
     align-items: center;
 
-    & p:nth-child(1) {
+    & p:nth-of-type(1) {
       margin-right: 3rem;
       position: relative;
 
