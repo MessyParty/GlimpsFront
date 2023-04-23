@@ -36,7 +36,7 @@ const ReviewPage = () => {
       <BestArea>
         {bestData
           ? bestData.map(
-              ({ title, nickname, overallRatings, body, photoUrls }) => (
+              ({ title, nickname, overallRatings, body, photoUrls, uuid }) => (
                 <React.Fragment key={title}>
                   <ReviewCard
                     reviewTitle={title}
@@ -44,10 +44,11 @@ const ReviewPage = () => {
                     score={overallRatings}
                     description={body}
                     imgSrc={photoUrls[0] ?? DEFAULT_IMG}
+                    uuid={uuid}
                   />
                   <Divider sx={{ borderColor: "black" }} />
                 </React.Fragment>
-              )
+              ),
             )
           : null}
       </BestArea>
@@ -75,10 +76,11 @@ const ReviewPage = () => {
                     body={body}
                     likeCnt={heartCnt}
                     nickname={nickname}
+                    uuid={uuid}
                   />
                   <Divider sx={{ borderColor: "black" }} />
                 </React.Fragment>
-              )
+              ),
             )
           : null}
       </AllArea>
