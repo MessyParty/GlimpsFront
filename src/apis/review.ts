@@ -17,7 +17,7 @@ export const getBestReview = async (num: number): Promise<Review[]> => {
   return data;
 };
 
-export const getReview = async (rid: number): Promise<Review> => {
+export const getReview = async (rid: string): Promise<Review> => {
   const { data } = await axios.get<Review>(`/reviews/${rid}`);
   return data;
 };
@@ -37,7 +37,7 @@ export const getReviewOfPerfume = async (pid: string): Promise<Review[]> => {
 };
 
 export const createReview = async <T = Review, R = ReviewPostType>(
-  payload: R
+  payload: R,
 ): Promise<T> => {
   const { data } = await api.post<T, AxiosResponse<T>, R>(`/reviews`, {
     ...payload,
@@ -47,7 +47,7 @@ export const createReview = async <T = Review, R = ReviewPostType>(
 
 export const updateReview = async <T = Review, R = ReviewPostType>(
   rid: string,
-  payload: R
+  payload: R,
 ): Promise<T> => {
   const { data } = await api.patch<T, AxiosResponse<T>, R>(`/reviews/${rid}`, {
     ...payload,
@@ -70,7 +70,7 @@ export const cancelReviewLike = async (rid: string): Promise<Review> => {
 };
 
 export const getAllReview = async (
-  params: ReviewParameterType
+  params: ReviewParameterType,
 ): Promise<ReviewListType[]> => {
   const { data } = await api.get<ReviewListType[]>(`/reviews`, {
     params,
