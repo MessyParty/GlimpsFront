@@ -1,15 +1,15 @@
-type Note = {
+export type Note = {
   engName: string;
   id: number;
   korName: string;
 };
 
-type Photo = {
+export type Photo = {
   order?: number;
   url: string;
 };
 
-type Perfume = {
+export type Perfume = {
   brandId: string;
   brandName: string;
   brandNameKor: string;
