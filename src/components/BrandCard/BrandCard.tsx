@@ -46,7 +46,9 @@ const BrandCard = ({
 export default BrandCard;
 
 const Container = styled(Card)`
-  width: 409px;
+  max-width: 781px;
+  min-width: 384px;
+  height: 540px;
   border-radius: 0;
   border: 1px solid #000;
 `;
@@ -55,8 +57,8 @@ const Content = styled(CardContent)`
   padding: 0;
   & > .perfume-img img {
     width: 100%;
-    height: 100%;
-    min-height: 405px;
+    height: 405px;
+    object-fit: contain;
   }
 `;
 
