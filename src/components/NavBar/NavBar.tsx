@@ -6,15 +6,26 @@ import { IconButton } from "@mui/material";
 import { useRouter } from "next/router";
 import Logo from "@/components/CustomIcon/Logo";
 import { ERROR_PAGE_REGEX } from "@/constants/regex";
+import { useRecoilState } from "recoil";
+import { modalOpenState } from "@/recoil/modalState";
+import SearchModal from "@/components/SearchModal";
+import Modal from "../Modal";
 
 const NavBar = () => {
   const router = useRouter();
+
+  const [open, setOpen] = useRecoilState(modalOpenState);
 
   const moveToMyPage = () => {
     router.push("/mypage");
   };
 
   if (ERROR_PAGE_REGEX.test(router.pathname)) return null;
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
   return (
     <>
       <LogoContainer>
@@ -30,8 +41,9 @@ const NavBar = () => {
           <Link href="/review">Review</Link>
         </Nav>
         <Utils>
-          <IconButton color="primary" aria-label="search">
+          <IconButton color="primary" aria-label="search" onClick={handleOpen}>
             <SearchIcon />
+            <Modal open={open} content={<SearchModal />} />
           </IconButton>
           <IconButton color="primary" aria-label="user" onClick={moveToMyPage}>
             <PersonOutlineIcon />
