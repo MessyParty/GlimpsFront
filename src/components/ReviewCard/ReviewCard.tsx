@@ -5,6 +5,7 @@ import { QuoteLeft, QuoteRight } from "../CustomIcon";
 import LikeButton from "../LikeButton";
 import Rating from "../Rating";
 import Tag from "../Tag";
+import Link from "next/link";
 
 interface ReviewCardProps extends CardProps {
   reviewTitle: string;
@@ -15,6 +16,7 @@ interface ReviewCardProps extends CardProps {
   imgSrc?: string;
   LikeButtonProps?: ComponentProps<typeof LikeButton>;
   likeCount?: number;
+  uuid?: string;
 }
 
 const ReviewCard2 = ({
@@ -25,6 +27,7 @@ const ReviewCard2 = ({
   description,
   imgSrc,
   LikeButtonProps,
+  uuid,
   ...props
 }: ReviewCardProps) => {
   return (
@@ -33,15 +36,17 @@ const ReviewCard2 = ({
         <ReviewContent>
           <Quote>
             <QuoteLeft />
-            <Typography
-              variant="h5"
-              component="blockquote"
-              fontSize="28px"
-              margin="0 12px"
-              paddingTop="20px"
-            >
-              {reviewTitle}
-            </Typography>
+            <Link href={`/review/${uuid}`}>
+              <Typography
+                variant="h5"
+                component="blockquote"
+                fontSize="28px"
+                margin="0 12px"
+                paddingTop="20px"
+              >
+                {reviewTitle}
+              </Typography>
+            </Link>
             <QuoteRight />
           </Quote>
           <div className="author">by {author}</div>

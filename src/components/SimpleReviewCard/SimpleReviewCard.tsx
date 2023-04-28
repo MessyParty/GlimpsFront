@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import LikeButton from "../LikeButton";
 import Rating from "../Rating";
 import { Divider, Typography } from "@mui/material";
+import Link from "next/link";
 
 interface SimpleReviewCardProps {
   imgSrc: string;
@@ -12,6 +13,7 @@ interface SimpleReviewCardProps {
   body?: string;
   nickname?: string;
   createdAt?: string;
+  uuid: string;
 }
 
 const SimpleReviewCard = ({
@@ -22,6 +24,7 @@ const SimpleReviewCard = ({
   body,
   nickname,
   createdAt,
+  uuid,
 }: SimpleReviewCardProps) => {
   return (
     <CardWrapper>
@@ -35,9 +38,11 @@ const SimpleReviewCard = ({
       </ImgWrapper>
       <InfoWrapper>
         <Rating value={score} precision={0.5} sx={{ fontSize: "30px" }} />
-        <Typography variant="h5" fontWeight="bolder">
-          {title}
-        </Typography>
+        <Link href={`/review/${uuid}`}>
+          <Typography variant="h5" fontWeight="bolder">
+            {title}
+          </Typography>
+        </Link>
         <Typography>{body}</Typography>
         <Meta>
           {createdAt ? (

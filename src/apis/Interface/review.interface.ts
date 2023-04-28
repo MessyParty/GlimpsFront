@@ -11,6 +11,7 @@ export type Review = {
   sillageRatings: number;
   title: string;
   tags?: string[];
+  uuid: string;
 };
 
 export type ReviewFormType = Pick<
