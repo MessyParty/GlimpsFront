@@ -2,7 +2,7 @@ import useLoginQuery from "@/hooks/queries/useLoginQuery";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-const oauth = () => {
+const OAuth = () => {
   const router = useRouter();
   const { code } = router.query as { code: string };
 
@@ -15,4 +15,4 @@ const oauth = () => {
   return null;
 };
 
-export default oauth;
+export default OAuth;

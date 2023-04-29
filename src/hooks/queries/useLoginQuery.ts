@@ -6,6 +6,7 @@ import { CACHE_KEYS } from "@/constants/cacheKeys";
 import { useRouter } from "next/router";
 import { setCookie } from "@/utils/cookie";
 import { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from "@/constants/auth";
+import { toEpochMillis } from "@/utils/time";
 
 const useLoginQuery = (code: string) => {
   const router = useRouter();
@@ -16,11 +17,11 @@ const useLoginQuery = (code: string) => {
     onSuccess: (response) => {
       setCookie(ACCESS_TOKEN_COOKIE, response.accessToken, {
         path: "/",
-        maxAge: response.accessTokenExpireTime * 1000,
+        maxAge: toEpochMillis(response.accessTokenExpireTime),
       });
       setCookie(REFRESH_TOKEN_COOKIE, response.refreshToken, {
         path: "/",
-        maxAge: response.refreshTokenExpireTime * 1000,
+        maxAge: toEpochMillis(response.refreshTokenExpireTime),
       });
       setLoginState(true);
       router.replace("/");

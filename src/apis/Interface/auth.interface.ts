@@ -1,14 +1,14 @@
 export type LoginResponse = {
   accessToken: string;
-  accessTokenExpireTime: number;
+  accessTokenExpireTime: string;
   grantType: string;
   refreshToken: string;
-  refreshTokenExpireTime: number;
+  refreshTokenExpireTime: string;
 };
 
 export type RefreshResponse = {
   accessToken: string;
-  accessTokenExpireTime: number;
+  accessTokenExpireTime: string;
   grantType: string;
 };
 

@@ -16,23 +16,21 @@ import { LoginOutlined, LogoutOutlined } from "@mui/icons-material";
 import useLogoutQuery from "@/hooks/queries/useLogoutQuery";
 import useModal from "@/hooks/useModal";
 import { MODAL_KEYS } from "@/constants/modalKeys";
+import LoginModal from "../LoginModal";
 
 const NavBar = () => {
   const router = useRouter();
   const isLogined = useRecoilValue(loginState);
   const [open, setOpen] = useRecoilState(modalOpenState);
   const loginModal = useModal(MODAL_KEYS.login);
+  const { isLogined, logoutHandler } = useLogoutQuery();
 
-  const mypage = () => {
+  const mypageHandler = () => {
     router.push("/mypage");
   };
 
-  const login = () => {
+  const loginHandler = () => {
     loginModal.openModal();
-  };
-
-  const logout = () => {
-    useLogoutQuery();
   };
 
   if (ERROR_PAGE_REGEX.test(router.pathname)) return null;
@@ -62,20 +60,33 @@ const NavBar = () => {
           </IconButton>
           {isLogined ? (
             <>
-              <IconButton color="primary" aria-label="user" onClick={mypage}>
+              <IconButton
+                color="primary"
+                aria-label="user"
+                onClick={mypageHandler}
+              >
                 <PersonOutlineIcon />
               </IconButton>
-              <IconButton color="primary" aria-label="logout" onClick={logout}>
+              <IconButton
+                color="primary"
+                aria-label="logout"
+                onClick={logoutHandler}
+              >
                 <LogoutOutlined />
               </IconButton>
             </>
           ) : (
-            <IconButton color="primary" aria-label="login" onClick={login}>
+            <IconButton
+              color="primary"
+              aria-label="login"
+              onClick={loginHandler}
+            >
               <LoginOutlined />
             </IconButton>
           )}
         </Utils>
       </NavContainer>
+      <LoginModal />
     </>
   );
 };
