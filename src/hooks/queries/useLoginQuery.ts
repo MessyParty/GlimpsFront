@@ -16,11 +16,11 @@ const useLoginQuery = (code: string) => {
     onSuccess: (response) => {
       setCookie(ACCESS_TOKEN_COOKIE, response.accessToken, {
         path: "/",
-        maxAge: response.accessTokenExpireTime * 1000,
+        expires: new Date(response.accessTokenExpireTime),
       });
       setCookie(REFRESH_TOKEN_COOKIE, response.refreshToken, {
         path: "/",
-        maxAge: response.refreshTokenExpireTime * 1000,
+        expires: new Date(response.refreshTokenExpireTime),
       });
       setLoginState(true);
       router.replace("/");

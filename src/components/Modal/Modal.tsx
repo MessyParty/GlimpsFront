@@ -1,26 +1,22 @@
 import { Dialog, DialogProps, DialogContent, IconButton } from "@mui/material";
-import { useRecoilState } from "recoil";
-import { modalOpenState } from "@/recoil/modalState";
 import { CloseOutlined } from "@mui/icons-material";
+import useModal from "@/hooks/useModal";
 
 interface ModalProps extends DialogProps {
+  modalKey: string;
   modalTitle?: React.ReactNode;
   content?: React.ReactNode;
   actions?: React.ReactNode;
 }
 
-const Modal = ({ title, content, actions, ...props }: ModalProps) => {
-  const [isOpen, setIsOpen] = useRecoilState(modalOpenState);
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+const Modal = ({ modalKey, title, content, actions, ...props }: ModalProps) => {
+  const { isOpen, closeModal } = useModal(modalKey);
 
   return (
     <Dialog
       {...props}
       open={isOpen}
-      onClose={handleClose}
+      onClose={closeModal}
       sx={{ "& .MuiPaper-root": { borderRadius: "0px" } }}
     >
       {title ? title : null}
@@ -30,7 +26,7 @@ const Modal = ({ title, content, actions, ...props }: ModalProps) => {
             border: "2px solid",
           }}
         >
-          <IconButton onClick={handleClose} style={{ float: "right" }}>
+          <IconButton onClick={closeModal} style={{ float: "right" }}>
             <CloseOutlined />
           </IconButton>
           {content}

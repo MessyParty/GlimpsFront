@@ -1,16 +1,18 @@
 import { Perfume } from "@/components/CustomIcon";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { loginState } from "@/recoil/auth";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import useLogoutQuery from "@/hooks/queries/useLogoutQuery";
 import LoginModal from "@/components/LoginModal";
-import { modalOpenState } from "@/recoil/modalState";
 import LoginRequiredModal from "@/components/LoginRequiredModal";
+import useModal from "@/hooks/useModal";
+import { MODAL_KEYS } from "@/constants/modalKeys";
 
 export default function Home() {
   const router = useRouter();
   const isLogined = useRecoilValue(loginState);
+  const loginModal = useModal(MODAL_KEYS.login);
 
   const login = () => {
     router.push("/login");
@@ -19,8 +21,6 @@ export default function Home() {
   const logout = () => {
     useLogoutQuery();
   };
-
-  const [, setIsOpen] = useRecoilState(modalOpenState);
 
   return (
     <>
@@ -33,7 +33,7 @@ export default function Home() {
       )}
       <Button
         onClick={() => {
-          setIsOpen(true);
+          loginModal.openModal();
         }}
       >
         모달창 열기

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import KakaoLogin from "../CustomIcon/KakaoLogin";
 import Modal from "../Modal";
 import Image from "next/image";
+import { MODAL_KEYS } from "@/constants/modalKeys";
 
 const LoginModal = () => {
   const router = useRouter();
@@ -25,7 +26,9 @@ const LoginModal = () => {
     </Container>
   );
 
-  return <Modal open={true} content={content}></Modal>;
+  return (
+    <Modal modalKey={MODAL_KEYS.login} open={true} content={content}></Modal>
+  );
 };
 
 export default LoginModal;

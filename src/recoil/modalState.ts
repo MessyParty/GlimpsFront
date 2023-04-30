@@ -1,6 +1,6 @@
-import { atom } from "recoil";
+import { atomFamily } from "recoil";
 
-export const modalOpenState = atom<boolean>({
-  key: "modalOpenState",
+export const modalStates = atomFamily({
+  key: "modalStates",
   default: false,
 });
