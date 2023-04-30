@@ -10,7 +10,7 @@ export const getPerfume = async (rid: number): Promise<Perfume[]> => {
 export const getBestPerfume = async (num: number): Promise<Perfume[]> => {
   const { data } = await axios.get<Perfume[]>("/perfumes/best", {
     params: {
-      amountPerfumes: num,
+      amount: num,
     },
   });
   return data;
