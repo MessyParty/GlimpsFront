@@ -13,6 +13,7 @@ const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 export default function Brand() {
   const { scrollRef, onMoveToElement } = useMoveScroll();
   const { data, isLoading, isError } = useQuery(["brand"], getBrand);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -22,7 +23,7 @@ export default function Brand() {
   }
 
   const sortedBrands = data?.sort((a, b) =>
-    a.brandName.localeCompare(b.brandName),
+    a.brandNameEng.localeCompare(b.brandNameEng),
   );
 
   return (
@@ -30,7 +31,7 @@ export default function Brand() {
       <AlphabetButton onMoveToElement={onMoveToElement} alphabet={ALPHABET} />
       {Array.from(ALPHABET).map((letter, index) => {
         const filteredBrands = sortedBrands?.filter(
-          (brand) => brand.brandName.toUpperCase().indexOf(letter) === 0,
+          (brand) => brand.brandNameEng.toUpperCase().indexOf(letter) === 0,
         );
         return (
           <BrandBox key={letter}>
@@ -41,7 +42,7 @@ export default function Brand() {
               {letter}
             </BrandListTitle>
             {filteredBrands?.length === 0 ? (
-              <p>데이터가 없습니다.</p>
+              <p>{""}</p>
             ) : (
               <BrandList filteredBrands={filteredBrands} />
             )}
