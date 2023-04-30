@@ -1,11 +1,9 @@
 import styled from "@emotion/styled";
 import { Button, Typography } from "@mui/material";
 import Logo from "../CustomIcon/Logo";
-import Modal from "../Modal";
-import { MODAL_KEYS } from "@/constants/modalKeys";
 
 const LoginRequiredModal = () => {
-  const content = (
+  return (
     <Container>
       <Logo style={{ width: "154px", height: "auto", padding: "0 100px" }} />
       <Typography fontSize={20} paddingTop="34px">
@@ -16,14 +14,6 @@ const LoginRequiredModal = () => {
       </Typography>
       <ConfirmButton>확인</ConfirmButton>
     </Container>
-  );
-
-  return (
-    <Modal
-      modalKey={MODAL_KEYS.loginRequired}
-      open={true}
-      content={content}
-    ></Modal>
   );
 };
 

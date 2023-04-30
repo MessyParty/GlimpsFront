@@ -13,7 +13,8 @@ import { deleteReview, updateReview } from "@/apis/review";
 import { useRecoilState } from "recoil";
 import Modal from "../Modal";
 import ReviewModal from "../ReviewModal";
-import { modalOpenState } from "@/recoil/modalState";
+import { MODAL_KEYS } from "@/constants/modalKeys";
+import useModal from "@/hooks/useModal";
 
 interface ReviewDetailProps extends CardProps {
   title: string;
@@ -46,7 +47,7 @@ export default function ReviewDetail({
   ...props
 }: ReviewDetailProps) {
   const router = useRouter();
-  const [open, setOpen] = useRecoilState(modalOpenState);
+  const { isOpen } = useModal(MODAL_KEYS.review);
 
   const handleDelete = (id: string) => {
     deleteReview(id);
@@ -204,7 +205,8 @@ export default function ReviewDetail({
             수정하기
           </Button>
           <Modal
-            open={open}
+            modalKey={MODAL_KEYS.review}
+            open={isOpen}
             content={<ReviewModal perfumeUuid={id} perfumeName={perfumeName} />}
             fullWidth
             maxWidth="lg"

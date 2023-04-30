@@ -1,8 +1,8 @@
 import ReviewModal from "@/components/ReviewModal";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import Modal from "@/components/Modal";
-import { useRecoilState } from "recoil";
-import { modalOpenState } from "@/recoil/modalState";
+import { MODAL_KEYS } from "@/constants/modalKeys";
+import useModal from "@/hooks/useModal";
 
 export default {
   title: "custom/review form",
@@ -14,13 +14,14 @@ export const Default: ComponentStory<typeof ReviewModal> = () => {
 };
 
 export const WithModal: ComponentStory<typeof ReviewModal> = () => {
-  const [open, setOpen] = useRecoilState(modalOpenState);
+  const { isOpen, openModal } = useModal(MODAL_KEYS.review);
 
   return (
     <>
-      <button onClick={() => setOpen(true)}>open</button>
+      <button onClick={openModal}>open</button>
       <Modal
-        open={open}
+        modalKey={MODAL_KEYS.review}
+        open={isOpen}
         content={<ReviewModal perfumeUuid="test2" />}
         fullWidth
         maxWidth="lg"

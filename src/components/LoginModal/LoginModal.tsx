@@ -3,9 +3,7 @@ import styled from "@emotion/styled";
 import { Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import KakaoLogin from "../CustomIcon/KakaoLogin";
-import Modal from "../Modal";
 import Image from "next/image";
-import { MODAL_KEYS } from "@/constants/modalKeys";
 
 const LoginModal = () => {
   const router = useRouter();
@@ -14,7 +12,7 @@ const LoginModal = () => {
     router.push(KAKAO_AUTH_URL);
   };
 
-  const content = (
+  return (
     <Container>
       <Image src="/glims-logo.svg" alt="logo" width={96} height={54} />
       <Typography fontSize={20} padding="14px 50px 80px 50px">
@@ -24,10 +22,6 @@ const LoginModal = () => {
         <Typography fontSize={18}>카카오로 로그인하기</Typography>
       </KakaoLoginButton>
     </Container>
-  );
-
-  return (
-    <Modal modalKey={MODAL_KEYS.login} open={true} content={content}></Modal>
   );
 };
 

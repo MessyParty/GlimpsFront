@@ -6,12 +6,8 @@ import { IconButton } from "@mui/material";
 import { useRouter } from "next/router";
 import Logo from "@/components/CustomIcon/Logo";
 import { ERROR_PAGE_REGEX } from "@/constants/regex";
-import { useRecoilState } from "recoil";
-import { modalOpenState } from "@/recoil/modalState";
 import SearchModal from "@/components/SearchModal";
 import Modal from "../Modal";
-import { useRecoilValue } from "recoil";
-import { loginState } from "@/recoil/auth";
 import { LoginOutlined, LogoutOutlined } from "@mui/icons-material";
 import useLogoutQuery from "@/hooks/queries/useLogoutQuery";
 import useModal from "@/hooks/useModal";
@@ -20,9 +16,8 @@ import LoginModal from "../LoginModal";
 
 const NavBar = () => {
   const router = useRouter();
-  const isLogined = useRecoilValue(loginState);
-  const [open, setOpen] = useRecoilState(modalOpenState);
   const loginModal = useModal(MODAL_KEYS.login);
+  const searchModal = useModal(MODAL_KEYS.search);
   const { isLogined, logoutHandler } = useLogoutQuery();
 
   const mypageHandler = () => {
@@ -33,12 +28,11 @@ const NavBar = () => {
     loginModal.openModal();
   };
 
-  if (ERROR_PAGE_REGEX.test(router.pathname)) return null;
-
-  const handleOpen = () => {
-    setOpen(true);
+  const searchHandler = () => {
+    searchModal.openModal();
   };
 
+  if (ERROR_PAGE_REGEX.test(router.pathname)) return null;
   return (
     <>
       <LogoContainer>
@@ -54,9 +48,12 @@ const NavBar = () => {
           <Link href="/review">Review</Link>
         </Nav>
         <Utils>
-          <IconButton color="primary" aria-label="search" onClick={handleOpen}>
+          <IconButton
+            color="primary"
+            aria-label="search"
+            onClick={searchHandler}
+          >
             <SearchIcon />
-            <Modal open={open} content={<SearchModal />} />
           </IconButton>
           {isLogined ? (
             <>
@@ -86,7 +83,16 @@ const NavBar = () => {
           )}
         </Utils>
       </NavContainer>
-      <LoginModal />
+      <Modal
+        modalKey={MODAL_KEYS.search}
+        open={searchModal.isOpen}
+        content={<SearchModal />}
+      />
+      <Modal
+        modalKey={MODAL_KEYS.login}
+        open={loginModal.isOpen}
+        content={<LoginModal />}
+      />
     </>
   );
 };
