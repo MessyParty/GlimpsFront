@@ -1,7 +1,7 @@
 import { FormProvider, useForm, useFormState } from "react-hook-form";
 import styled from "@emotion/styled";
 import { OverallRating } from "./components";
-import type { ReviewPostType } from "@/apis/Interface/review.interface";
+import type { Review, ReviewPostType } from "@/apis/Interface/review.interface";
 import SpecificRating from "./components/SpecificRating";
 import MoodSelector from "./components/MoodSelector";
 import TitleInput from "./components/TitleInput";
@@ -14,25 +14,31 @@ import Spacer from "../Spacer";
 type ReviewFormType = Omit<ReviewPostType, "perfumeUuid">;
 type ReviewModalPropsType = Pick<ReviewPostType, "perfumeUuid"> & {
   perfumeName?: string;
-  perfumeSubName?: string;
+  perfumeBrandEng?: string;
+  reviewData?: Review;
 };
 
 const ReviewModal = ({
   perfumeUuid,
   perfumeName = "GENTLE NIGHT",
-  perfumeSubName = "NONFICTION",
+  perfumeBrandEng = "NONFICTION",
+  reviewData,
 }: ReviewModalPropsType) => {
   const methods = useForm<ReviewFormType>({
     defaultValues: {
-      body: "",
-      longevityRatings: 0,
-      overallRatings: 0,
-      photoUrls: [],
-      tags: [],
-      sillageRatings: 0,
-      title: "",
+      ...(reviewData || {
+        body: "",
+        longevityRatings: 0,
+        overallRatings: 0,
+        photoUrls: [],
+        tags: [],
+        sillageRatings: 0,
+        title: "",
+      }),
+      ...reviewData,
     },
   });
+
   const { errors } = useFormState({
     control: methods.control,
     name: ["tags", "title", "body"],
@@ -47,7 +53,9 @@ const ReviewModal = ({
       <FormWrapper>
         <HeaderText>
           <Typography variant="h5">{perfumeName}</Typography>
-          <Typography variant="subtitle1">{perfumeSubName}</Typography>
+          <Typography variant="subtitle1">
+            {reviewData ? reviewData.perfumeBrandEng : perfumeBrandEng}
+          </Typography>
         </HeaderText>
         <Spacer y={2} />
         <ReviewDivider variant="middle" />
@@ -64,7 +72,7 @@ const ReviewModal = ({
           <Spacer />
           <WrapperFull>
             <Typography variant="h6">Mood</Typography>
-            <MoodSelector />
+            {/* <MoodSelector /> */}
             {errors?.tags?.message ? (
               <ErrorMsg>{errors?.tags?.message}</ErrorMsg>
             ) : null}
@@ -97,7 +105,7 @@ const ReviewModal = ({
             customColor="black"
             customTextColor="white"
           >
-            리뷰 남기기
+            {reviewData ? "수정하기" : "리뷰 남기기"}
           </Button>
         </Form>
       </FormWrapper>
