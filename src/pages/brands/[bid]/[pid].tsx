@@ -1,25 +1,35 @@
 /* eslint-disable @next/next/no-img-element */
+import { useState } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 import SortController from "@/components/SortController";
 import { getPerfume } from "@/apis/perfume";
-import { usePerfume } from "@/hooks/queries";
+import { usePerfume, useBestPerfumeReview } from "@/hooks/queries";
 import { Typography, Divider } from "@mui/material";
 import Spacer from "@/components/Spacer";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import Rating from "@/components/Rating";
+import ReviewCard from "@/components/ReviewCard";
+import { getBestReviewByPerfume } from "@/apis/review";
+
+const DEFAULT_IMG =
+  "https://cdn.pixabay.com/photo/2018/01/10/13/47/essential-oil-3073901_960_720.jpg";
 
 type DetailType = {
   pid: string;
   bid: string;
 };
 
+type Order = "DATE" | "HEARTS_COUNT";
+
 const DetailPage = () => {
   const router = useRouter();
   const { pid, bid } = router.query as DetailType;
   const { data } = usePerfume(pid);
+  const { data: bestReview } = useBestPerfumeReview(pid);
+  const [order, setOrder] = useState<Order>("DATE");
 
   return (
     <PageContainer>
@@ -98,6 +108,19 @@ const DetailPage = () => {
       <Spacer y={2} />
       <StyledDivider position="left" />
       <Spacer y={2} />
+      {bestReview?.map(
+        ({ title, nickname, overallRatings, body, photoUrls, uuid }) => (
+          <ReviewCard
+            key={uuid}
+            reviewTitle={title}
+            author={nickname}
+            score={overallRatings}
+            description={body}
+            imgSrc={photoUrls[0] ?? DEFAULT_IMG}
+            uuid={uuid}
+          />
+        )
+      )}
     </PageContainer>
   );
 };
@@ -125,10 +148,16 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { pid, bid } = params as DetailType;
   const queryClient = new QueryClient();
 
-  queryClient.prefetchQuery({
-    queryKey: ["perfume", pid],
-    queryFn: () => getPerfume(pid),
-  });
+  await Promise.allSettled([
+    queryClient.prefetchQuery({
+      queryKey: ["perfume", pid],
+      queryFn: () => getPerfume(pid),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ["bestPerfumeReview", pid],
+      queryFn: () => getBestReviewByPerfume(pid),
+    }),
+  ]);
 
   return {
     props: {
