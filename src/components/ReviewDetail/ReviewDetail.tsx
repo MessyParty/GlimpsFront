@@ -16,6 +16,7 @@ import { MODAL_KEYS } from "@/constants/modalKeys";
 import useModal from "@/hooks/useModal";
 import useReview from "@/hooks/queries/useReview";
 import DetailRating from "./components/DetailRating";
+import { Review } from "@/apis/Interface/review.interface";
 interface ReviewData {
   perfumeBrandEng: string;
   body: string;
@@ -35,7 +36,22 @@ interface ReviewData {
 }
 
 export default function ReviewDetail({ ...props }) {
-  const [reviewData, setReviewData] = useState({});
+  const [reviewData, setReviewData] = useState<Review>({
+    perfumeBrandEng: "",
+    body: "",
+    createdAt: "",
+    heartCnt: 0,
+    longevityRatings: 0,
+    nickname: "",
+    overallRatings: 0,
+    perfumeBrand: "",
+    perfumeName: "",
+    photoUrls: [],
+    sillageRatings: 0,
+    title: "",
+    uuid: "",
+    scentRatings: 0,
+  });
 
   const router = useRouter();
   const reviewModal = useModal(MODAL_KEYS.review);
