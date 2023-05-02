@@ -15,6 +15,7 @@ import { deleteReview } from "@/apis/review";
 import { MODAL_KEYS } from "@/constants/modalKeys";
 import useModal from "@/hooks/useModal";
 import useReview from "@/hooks/queries/useReview";
+import DetailRating from "./components/DetailRating";
 interface ReviewData {
   perfumeBrandEng: string;
   body: string;
@@ -40,9 +41,11 @@ export default function ReviewDetail({ ...props }) {
   const reviewModal = useModal(MODAL_KEYS.review);
 
   const { pid } = router.query;
+
   const { data } = useReview(pid as string);
 
   const handleDelete = (id: string) => {
+    alert(`삭제하시겠습니까?`);
     deleteReview(id);
   };
 
@@ -54,6 +57,8 @@ export default function ReviewDetail({ ...props }) {
   const moveToBack = () => {
     router.back();
   };
+
+  console.log(data);
 
   const date = new Date(data?.createdAt as string);
   const formattedDate = `${date.getFullYear()}.${(date.getMonth() + 1)
@@ -69,7 +74,6 @@ export default function ReviewDetail({ ...props }) {
               <Typography fontSize={30}>{data.perfumeName}</Typography>
               <Typography fontSize={23}>{data.perfumeBrandEng}</Typography>
             </ReviewTopBox>
-
             <ReviewTitleBox>
               <Typography fontSize={20}>{data.title}</Typography>
               <div className="review-info">
@@ -123,55 +127,11 @@ export default function ReviewDetail({ ...props }) {
             <Typography fontWeight="bold" fontSize={25}>
               SCORE
             </Typography>
-            <ReviewRatingContent>
-              <div className="rating-title">
-                <Typography fontWeight="bold" fontSize={20}>
-                  본연의 향
-                </Typography>
-                <Typography fontSize={18} color="#474747">
-                  SCENT
-                </Typography>
-              </div>
-              <Rating
-                sx={{ fontSize: "48px" }}
-                value={data.scentRatings ?? 1.5}
-                precision={0.5}
-                size="large"
-              />
-            </ReviewRatingContent>
-            <ReviewRatingContent>
-              <div className="rating-title">
-                <Typography fontWeight="bold" fontSize={20}>
-                  지속력
-                </Typography>
-                <Typography fontSize={18} color="#474747">
-                  LONGEVITY
-                </Typography>
-              </div>
-              <Rating
-                sx={{ fontSize: "48px" }}
-                value={data.longevityRatings ?? 1.5}
-                precision={0.5}
-                size="large"
-              />
-            </ReviewRatingContent>
-            <ReviewRatingContent>
-              <div className="rating-title">
-                <Typography fontWeight="bold" fontSize={20}>
-                  잔향
-                </Typography>
-                <Typography fontSize={18} color="#474747">
-                  SILLAGE
-                </Typography>
-              </div>
-              <Rating
-                sx={{ fontSize: "48px" }}
-                value={data.sillageRatings ?? 1.5}
-                precision={0.5}
-                size="large"
-              />
-            </ReviewRatingContent>
-
+            <DetailRating
+              scentRatings={data.scentRatings}
+              longevityRatings={data.longevityRatings}
+              sillageRatings={data.sillageRatings}
+            />
             <ReviewDescription>
               <Typography fontSize={20} fontWeight="light">
                 {data.body}
@@ -211,7 +171,7 @@ export default function ReviewDetail({ ...props }) {
                   padding: "10px 40px",
                   margin: "0 1rem",
                 }}
-                onClick={() => handleDelete}
+                onClick={() => handleDelete(pid as string)}
               >
                 삭제하기
               </Button>
@@ -285,13 +245,6 @@ const Quote = styled.div`
     min-width: 40px;
     min-height: 40px;
   }
-`;
-
-const ReviewRatingContent = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 40%;
-  margin: 0.5rem 0;
 `;
 
 const ReviewDescription = styled.div`
