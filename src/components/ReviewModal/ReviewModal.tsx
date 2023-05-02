@@ -10,6 +10,7 @@ import ImageInput from "./components/ImageInput";
 import { Divider, Typography } from "@mui/material";
 import Button from "../Button";
 import Spacer from "../Spacer";
+import { updateReview } from "@/apis/review";
 
 type ReviewFormType = Omit<ReviewPostType, "perfumeUuid">;
 type ReviewModalPropsType = Pick<ReviewPostType, "perfumeUuid"> & {
@@ -44,8 +45,24 @@ const ReviewModal = ({
     name: ["tags", "title", "body"],
   });
 
-  const onSubmit = (data: ReviewFormType) => {
+  const isEditMode = true;
+
+  const onSubmit = async (data: ReviewFormType) => {
     console.log(data);
+
+    if (isEditMode && reviewData?.uuid) {
+      try {
+        const updatedReview = await updateReview<Review, ReviewPostType>(
+          reviewData.uuid,
+          data,
+        );
+        console.log(updatedReview);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      // 새로운 리뷰 작성
+    }
   };
 
   return (
