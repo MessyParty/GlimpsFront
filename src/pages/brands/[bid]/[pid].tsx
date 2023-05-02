@@ -1,17 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { modalOpenState } from "@/recoil/modalState";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 import SortController from "@/components/SortController";
 import { getPerfume } from "@/apis/perfume";
 import { usePerfume, useBestPerfumeReview } from "@/hooks/queries";
-import { Typography, Divider } from "@mui/material";
+import { Typography, Divider, BackdropProps } from "@mui/material";
 import Spacer from "@/components/Spacer";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import Rating from "@/components/Rating";
 import ReviewCard from "@/components/ReviewCard";
+import Button from "@/components/Button";
+import ReviewModal from "@/components/ReviewModal";
+import Modal from "@/components/Modal";
 import { getBestReviewByPerfume } from "@/apis/review";
 
 const DEFAULT_IMG =
@@ -30,6 +35,7 @@ const DetailPage = () => {
   const { data } = usePerfume(pid);
   const { data: bestReview } = useBestPerfumeReview(pid);
   const [order, setOrder] = useState<Order>("DATE");
+  const [open, setOpen] = useRecoilState(modalOpenState);
 
   return (
     <PageContainer>
@@ -121,6 +127,28 @@ const DetailPage = () => {
           />
         )
       )}
+      <Spacer y={1} />
+      <StyledDivider position="right" />
+      <Spacer />
+      <ButtonArea>
+        <AddReviewButton
+          variant="outlined"
+          customColor="black"
+          customTextColor="white"
+          onClick={() => setOpen(true)}
+        >
+          리뷰 남기기
+        </AddReviewButton>
+        <Modal
+          open={open}
+          content={
+            <ReviewModal perfumeUuid={pid} perfumeName={data?.perfumeName} />
+          }
+          fullWidth
+          maxWidth="lg"
+        />
+      </ButtonArea>
+      <Spacer />
     </PageContainer>
   );
 };
@@ -238,6 +266,20 @@ const BlackDivider = styled(Divider)`
 
 const BoldTypo = styled(Typography)`
   font-weight: bolder;
+`;
+
+const ButtonArea = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+const AddReviewButton = styled(Button)`
+  border-radius: 0;
+  width: 25%;
+  font-size: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 `;
 
 const Square = styled.div<{ pos: "left" | "right"; w: string }>`
