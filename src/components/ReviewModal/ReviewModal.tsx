@@ -54,7 +54,10 @@ const ReviewModal = ({
       try {
         const updatedReview = await updateReview<Review, ReviewPostType>(
           reviewData.uuid,
-          data,
+          {
+            ...data,
+            perfumeUuid: reviewData.uuid,
+          },
         );
         console.log(updatedReview);
       } catch (error) {
