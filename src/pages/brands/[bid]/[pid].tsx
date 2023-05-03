@@ -1,14 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from "react";
-import { useRecoilState } from "recoil";
-import { modalOpenState } from "@/recoil/modalState";
+import React from "react";
+import useModal from "@/hooks/useModal";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
-import SortController from "@/components/SortController";
 import { getPerfume } from "@/apis/perfume";
-import { usePerfume, useBestPerfumeReview } from "@/hooks/queries";
-import { Typography, Divider, BackdropProps } from "@mui/material";
+import {
+  usePerfume,
+  useBestPerfumeReview,
+  usePerfumeReviews,
+} from "@/hooks/queries";
+import { Typography, Divider } from "@mui/material";
 import Spacer from "@/components/Spacer";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
@@ -17,7 +19,9 @@ import ReviewCard from "@/components/ReviewCard";
 import Button from "@/components/Button";
 import ReviewModal from "@/components/ReviewModal";
 import Modal from "@/components/Modal";
+import SimpleReviewCard from "@/components/SimpleReviewCard";
 import { getBestReviewByPerfume } from "@/apis/review";
+import { MODAL_KEYS } from "@/constants/modalKeys";
 
 const DEFAULT_IMG =
   "https://cdn.pixabay.com/photo/2018/01/10/13/47/essential-oil-3073901_960_720.jpg";
@@ -34,8 +38,8 @@ const DetailPage = () => {
   const { pid, bid } = router.query as DetailType;
   const { data } = usePerfume(pid);
   const { data: bestReview } = useBestPerfumeReview(pid);
-  const [order, setOrder] = useState<Order>("DATE");
-  const [open, setOpen] = useRecoilState(modalOpenState);
+  const { openModal, isOpen } = useModal(MODAL_KEYS["review"]);
+  const { data: prData } = usePerfumeReviews(pid);
 
   return (
     <PageContainer>
@@ -135,19 +139,38 @@ const DetailPage = () => {
           variant="outlined"
           customColor="black"
           customTextColor="white"
-          onClick={() => setOpen(true)}
+          onClick={openModal}
         >
           리뷰 남기기
         </AddReviewButton>
         <Modal
-          open={open}
+          open={isOpen}
           content={
             <ReviewModal perfumeUuid={pid} perfumeName={data?.perfumeName} />
           }
           fullWidth
           maxWidth="lg"
+          modalKey="review"
         />
       </ButtonArea>
+      <Spacer />
+      <BlackDivider />
+      {prData
+        ? prData.map((props) => (
+            <React.Fragment key={props.uuid}>
+              <SimpleReviewCard
+                imgSrc={props.photoUrls[0] ?? DEFAULT_IMG}
+                title={props.title}
+                score={props.overallRatings}
+                body={props.body}
+                likeCnt={props.heartCnt}
+                nickname={props.nickname}
+                uuid={props.uuid}
+              />
+              <BlackDivider />
+            </React.Fragment>
+          ))
+        : null}
       <Spacer />
     </PageContainer>
   );
