@@ -18,7 +18,7 @@ const NavBar = () => {
   const router = useRouter();
   const loginModal = useModal(MODAL_KEYS.login);
   const searchModal = useModal(MODAL_KEYS.search);
-  const { isLogined, logoutHandler } = useLogoutQuery();
+  const { authState, logoutHandler } = useLogoutQuery();
 
   const mypageHandler = () => {
     router.push("/mypage");
@@ -55,7 +55,7 @@ const NavBar = () => {
           >
             <SearchIcon />
           </IconButton>
-          {isLogined ? (
+          {authState === "LOGINED" ? (
             <>
               <IconButton
                 color="primary"

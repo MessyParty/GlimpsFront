@@ -1,7 +1,7 @@
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useQuery } from "@tanstack/react-query";
 import { login } from "@/apis/auth";
-import { loginState } from "@/recoil/auth";
+import { authStateAtom, authActionAtom } from "@/recoil/authAtom";
 import { CACHE_KEYS } from "@/constants/cacheKeys";
 import { useRouter } from "next/router";
 import { setCookie } from "@/utils/cookie";
@@ -9,10 +9,11 @@ import { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from "@/constants/auth";
 
 const useLoginQuery = (code: string) => {
   const router = useRouter();
-  const setLoginState = useSetRecoilState(loginState);
-
+  const setAuthState = useSetRecoilState(authStateAtom);
+  const [authAction, setAuthAction] = useRecoilState(authActionAtom);
+  
   useQuery(CACHE_KEYS.login, () => login(code), {
-    enabled: !!code,
+    enabled: !!code && authAction === "LOGIN",
     onSuccess: (response) => {
       setCookie(ACCESS_TOKEN_COOKIE, response.accessToken, {
         path: "/",
@@ -22,16 +23,17 @@ const useLoginQuery = (code: string) => {
         path: "/",
         expires: new Date(response.refreshTokenExpireTime),
       });
-      setLoginState(true);
+      setAuthState("LOGINED");
       router.replace("/");
     },
     onError: () => {
       alert("로그인에 실패했습니다.");
+      setAuthAction("LOGOUT");
       router.replace("/");
     },
   });
 
-  return null;
+  return setAuthAction("LOGIN");
 };
 
 export default useLoginQuery;
