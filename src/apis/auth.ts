@@ -6,7 +6,7 @@ import {
 } from "./Interface/auth.interface";
 
 export const login = async (code: string): Promise<LoginResponse> => {
-  const { data: stateData } = await api.get("/api/v1/session/state", {
+  const { data: stateData } = await api.get("/session/state", {
     params: { provider: "kakao" },
     withCredentials: true,
   });
@@ -18,15 +18,15 @@ export const login = async (code: string): Promise<LoginResponse> => {
 };
 
 export const refresh = async (): Promise<RefreshResponse> => {
-  const { data } = await api.post("/api/v1/session/access-token/issue");
+  const { data } = await api.post("/access-token/issue");
   return data;
 };
 
 export const logout = async () => {
-  return await api.post("/api/v1/logout");
+  return await api.post("/logout");
 };
 
 export const profile = async (): Promise<ProfileResponse> => {
-  const { data } = await api.get("/api/v1/users");
+  const { data } = await api.get("/users");
   return data;
 };

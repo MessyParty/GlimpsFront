@@ -20,8 +20,15 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const accessToken = getCookie(ACCESS_TOKEN_COOKIE)
+  const accessToken = getCookie(ACCESS_TOKEN_COOKIE);
   config.headers.Authorization = `Bearer ${accessToken}`;
+  return config;
+});
+
+api.interceptors.request.use((config) => {
+  if (config.url?.startsWith("/login")) {
+    config.baseURL = process.env.NEXT_PUBLIC_OAUTH_URL;
+  }
   return config;
 });
 
