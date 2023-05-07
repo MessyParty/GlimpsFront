@@ -20,6 +20,7 @@ const nextConfig = {
       {
         source: "/:path*",
         destination: "https://dev.glims.store/api/v1/:path*",
+        has: [{ type: "header", key: "x-rewrite-target", value: "true" }],
       },
     ];
   },

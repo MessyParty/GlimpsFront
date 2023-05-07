@@ -10,7 +10,7 @@ import type {
 import { Perfume } from "./Interface/perfume.interface";
 
 export const getBestReview = async (num: number): Promise<Review[]> => {
-  const { data } = await axios.get<Review[]>("/reviews/bestReviews", {
+  const { data } = await api.get<Review[]>("/reviews/bestReviews", {
     params: {
       amountOfBestReview: num,
     },
@@ -19,17 +19,17 @@ export const getBestReview = async (num: number): Promise<Review[]> => {
 };
 
 export const getReview = async (rid: string): Promise<Review> => {
-  const { data } = await axios.get<Review>(`/reviews/${rid}`);
+  const { data } = await api.get<Review>(`/reviews/${rid}`);
   return data;
 };
 
 export const getRecentReview = async (): Promise<Review> => {
-  const { data } = await axios.get<Review>(`/reviews/recentReviews`);
+  const { data } = await api.get<Review>(`/reviews/recentReviews`);
   return data;
 };
 
 export const getReviewOfPerfume = async (pid: string): Promise<Review[]> => {
-  const { data } = await axios.get<Review[]>(`/reviews/perfumeReviews`, {
+  const { data } = await api.get<Review[]>(`/reviews/perfumeReviews`, {
     params: {
       perfumeUuid: pid,
     },

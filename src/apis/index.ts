@@ -17,6 +17,9 @@ const isAuthError = (error: AxiosResponse): boolean => {
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   validateStatus: (status) => status >= 200 && status < 400,
+  headers: {
+    "x-rewrite-target": "true",
+  },
 });
 /*
 모든 api call에 불필요하게 들어가는 것과 로그인 요청에도 포함되는 것을 방지 하기 위해 삭제 했습니다
@@ -33,7 +36,6 @@ api.interceptors.request.use((config) => {
   const accessToken = getCookie(ACCESS_TOKEN_COOKIE);
   if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
 
-  // console.log(config);
   /*
   if (config.url?.startsWith("/login")) {
     rewrites 설정 변경으로 대체 하였습니다
