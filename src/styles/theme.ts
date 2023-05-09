@@ -22,7 +22,7 @@ const theme = createTheme({
     ...pageCustomComponents,
   },
   typography: {
-    fontFamily: ["Libre Baskerville", "Pretendard-Regular", "sans-serif"].join(
+    fontFamily: ["Pretendard-Regular", "sans-serif"].join(
       ","
     ),
   },
