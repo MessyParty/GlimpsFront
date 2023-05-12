@@ -8,7 +8,7 @@ const useCreateReview = () => {
     ({ ...payloads }: ReviewPostType) => createReview({ ...payloads }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["review"]);
+        queryClient.invalidateQueries(["perfumeReview"]);
       },
     }
   );

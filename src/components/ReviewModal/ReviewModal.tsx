@@ -10,8 +10,10 @@ import ImageInput from "./components/ImageInput";
 import { Divider, Typography } from "@mui/material";
 import Button from "../Button";
 import Spacer from "../Spacer";
-import { useCreateReview } from "@/hooks/queries";
+import { useCreateReview, useCreateReviewPhoto } from "@/hooks/queries";
 import type { Review } from "@/apis/Interface/review.interface";
+import { MODAL_KEYS } from "@/constants/modalKeys";
+import useModal from "@/hooks/useModal";
 
 type FormType = Review & { photo: Blob[] };
 type ReviewModalPropsType = Pick<ReviewPostType, "perfumeUuid"> & {
@@ -40,9 +42,11 @@ const ReviewModal = ({
     control: methods.control,
     name: ["title", "body"],
   });
-  const { mutate } = useCreateReview();
+  const { mutateAsync } = useCreateReview();
+  const { mutateAsync: mutatePhoto } = useCreateReviewPhoto();
+  const { closeModal } = useModal(MODAL_KEYS["review"]);
 
-  const onSubmit = (data: FormType) => {
+  const onSubmit = async (data: FormType) => {
     const {
       body,
       longevityRatings,
@@ -53,7 +57,10 @@ const ReviewModal = ({
       photo,
     } = data;
     // console.log(data);
-    mutate({
+    const formData = new FormData();
+    formData.append("files", photo[0]);
+
+    const result = await mutateAsync({
       body,
       longevityRatings,
       overallRatings,
@@ -62,6 +69,10 @@ const ReviewModal = ({
       title,
       perfumeUuid,
     });
+
+    await mutatePhoto({ id: result.uuid, photo: formData });
+
+    closeModal();
   };
 
   return (

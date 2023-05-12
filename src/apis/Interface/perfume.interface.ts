@@ -22,3 +22,7 @@ export type Perfume = {
   uuid: string;
   photos: Photo[];
 };
+
+export type ReviewPhoto = {
+  photoUrl: string;
+};
