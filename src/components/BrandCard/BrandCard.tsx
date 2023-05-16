@@ -6,12 +6,14 @@ import {
   Card,
   CardProps,
 } from "@mui/material";
+import Link from "next/link";
 
 interface BrandCardProps extends CardProps {
   brandName: string;
   perfumeName: string;
   score: number;
   imgSrc?: string;
+  uuid: string;
 }
 
 const BrandCard = ({
@@ -19,26 +21,29 @@ const BrandCard = ({
   perfumeName,
   score,
   imgSrc,
+  uuid,
   ...props
 }: BrandCardProps) => {
   return (
     <Container {...props}>
-      <Content>
-        <div className="perfume-img">
-          <CardMedia component="img" image={imgSrc} alt="perfume image" />
-        </div>
-        <PerfumeBox>
-          <div className="perfume-info">
-            <Typography fontSize="21px" fontWeight="bold">
-              {brandName}
-            </Typography>
-            <Typography fontSize="18px">{perfumeName}</Typography>
+      <Link href={`/perfumes/${uuid}`} legacyBehavior>
+        <Content>
+          <div className="perfume-img">
+            <CardMedia component="img" image={imgSrc} alt="perfume image" />
           </div>
-          <div className="score">
-            <Typography fontSize="17px">{score}</Typography>
-          </div>
-        </PerfumeBox>
-      </Content>
+          <PerfumeBox>
+            <div className="perfume-info">
+              <Typography fontSize="21px" fontWeight="bold">
+                {brandName}
+              </Typography>
+              <Typography fontSize="18px">{perfumeName}</Typography>
+            </div>
+            <div className="score">
+              <Typography fontSize="17px">{score}</Typography>
+            </div>
+          </PerfumeBox>
+        </Content>
+      </Link>
     </Container>
   );
 };
