@@ -1,4 +1,3 @@
-import axios from "axios";
 import api from ".";
 import type { AxiosResponse } from "axios";
 import type {

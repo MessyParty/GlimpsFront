@@ -58,7 +58,7 @@ const NavBar = () => {
   const router = useRouter();
   const loginModal = useModal(MODAL_KEYS.login);
   const searchModal = useModal(MODAL_KEYS.search);
-  const { isLogined, logoutHandler } = useLogoutQuery();
+  const { authState, logoutHandler } = useLogoutQuery();
 
   const searchHandler = () => {
     searchModal.openModal();
@@ -91,6 +91,32 @@ const NavBar = () => {
           >
             <SearchIcon />
           </IconButton>
+          {authState === "LOGINED" ? (
+            <>
+              <IconButton
+                color="primary"
+                aria-label="user"
+                onClick={mypageHandler}
+              >
+                <PersonOutlineIcon />
+              </IconButton>
+              <IconButton
+                color="primary"
+                aria-label="logout"
+                onClick={logoutHandler}
+              >
+                <LogoutOutlined />
+              </IconButton>
+            </>
+          ) : (
+            <IconButton
+              color="primary"
+              aria-label="login"
+              onClick={loginHandler}
+            >
+              <LoginOutlined />
+            </IconButton>
+          )}
           <AuthModule
             loginModalCb={loginHandler}
             logoutModalCb={logoutHandler}
