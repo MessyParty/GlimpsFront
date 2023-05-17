@@ -1,4 +1,3 @@
-import axios from "axios";
 import api from ".";
 import type { AxiosResponse } from "axios";
 import type {
@@ -7,9 +6,10 @@ import type {
   ReviewParameterType,
   ReviewListType,
 } from "./Interface/review.interface";
+import type { ReviewPhoto } from "./Interface/perfume.interface";
 
 export const getBestReview = async (num: number): Promise<Review[]> => {
-  const { data } = await axios.get<Review[]>("/reviews/bestReviews", {
+  const { data } = await api.get<Review[]>("/reviews/bestReviews", {
     params: {
       amountOfBestReview: num,
     },
@@ -18,17 +18,17 @@ export const getBestReview = async (num: number): Promise<Review[]> => {
 };
 
 export const getReview = async (rid: string): Promise<Review> => {
-  const { data } = await axios.get<Review>(`/reviews/${rid}`);
+  const { data } = await api.get<Review>(`/reviews/${rid}`);
   return data;
 };
 
 export const getRecentReview = async (): Promise<Review> => {
-  const { data } = await axios.get<Review>(`/reviews/recentReviews`);
+  const { data } = await api.get<Review>(`/reviews/recentReviews`);
   return data;
 };
 
 export const getReviewOfPerfume = async (pid: string): Promise<Review[]> => {
-  const { data } = await axios.get<Review[]>(`/reviews/perfumeReviews`, {
+  const { data } = await api.get<Review[]>(`/reviews/perfumeReviews`, {
     params: {
       perfumeUuid: pid,
     },
@@ -37,7 +37,7 @@ export const getReviewOfPerfume = async (pid: string): Promise<Review[]> => {
 };
 
 export const createReview = async <T = Review, R = ReviewPostType>(
-  payload: R,
+  payload: R
 ): Promise<T> => {
   const { data } = await api.post<T, AxiosResponse<T>, R>(`/reviews`, {
     ...payload,
@@ -47,7 +47,7 @@ export const createReview = async <T = Review, R = ReviewPostType>(
 
 export const updateReview = async <T = Review, R = ReviewPostType>(
   rid: string,
-  payload: R,
+  payload: R
 ): Promise<T> => {
   const { data } = await api.patch<T, AxiosResponse<T>, R>(`/reviews/${rid}`, {
     ...payload,
@@ -70,10 +70,32 @@ export const cancelReviewLike = async (rid: string): Promise<Review> => {
 };
 
 export const getAllReview = async (
-  params: ReviewParameterType,
+  params: ReviewParameterType
 ): Promise<ReviewListType[]> => {
   const { data } = await api.get<ReviewListType[]>(`/reviews`, {
     params,
   });
+  return data;
+};
+
+export const getMyReview = async (
+  params: ReviewParameterType
+): Promise<ReviewListType[]> => {
+  const { data } = await api.get(`/reviews/myReviews`, {
+    params,
+  });
+  return data;
+};
+
+export const getBestReviewByPerfume = async (
+  pid: string
+): Promise<Review[]> => {
+  const { data } = await api.get<Review[]>(`/reviews/${pid}/bestReviews`);
+  return data;
+};
+
+// prettier-ignore
+export const createReviewPhoto = async (uuid: string, body: FormData): Promise<ReviewPhoto[]> => {
+  const { data } = await api.post<ReviewPhoto[]>(`/reviews/photos/${uuid}`, body, { headers: { "Content-Type": "multipart/form-data" } });
   return data;
 };

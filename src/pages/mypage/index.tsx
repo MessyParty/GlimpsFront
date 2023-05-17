@@ -1,26 +1,39 @@
+import BrandCard from "@/components/BrandCard";
 import Card from "@/components/Card";
+import Modal from "@/components/Modal";
+import NicknameUpdateModal from "@/components/NicknameUpdateModal";
 import PerfumeCard from "@/components/PerfumeCard";
 import ReviewCard from "@/components/ReviewCard";
-import ReviewCard2 from "@/components/ReviewCard/ReviewCard";
+import SearchModal from "@/components/SearchModal";
+import { MODAL_KEYS } from "@/constants/modalKeys";
 import useProfileQuery from "@/hooks/queries/useProfileQuery";
+import useModal from "@/hooks/useModal";
 import styled from "@emotion/styled";
+import { Button } from "@mui/material";
 
 const MyPage = () => {
   const { data } = useProfileQuery();
+  const nicknameUpdateModal = useModal(MODAL_KEYS.nicknameUpdate);
+
+  const nicknameUpdateHandler = () => {
+    nicknameUpdateModal.openModal();
+  };
 
   return (
     <>
       <Wrapper>
         <SummaryText>
-          {/* <b>{data?.nickname}님,</b> */}
-          <b>시후 컬렉터님,</b>
+          <b>{data?.nickname}님,</b>
         </SummaryText>
         <SummaryText>
           오늘까지 <b>27개</b>의 향수를 수집하고 계시군요!
         </SummaryText>
+        <NicknameUpdateButton onClick={nicknameUpdateHandler}>
+          닉네임 수정
+        </NicknameUpdateButton>
       </Wrapper>
       <Wrapper>
-        <ReviewCard2
+        <ReviewCard
           reviewTitle="처음 분사했을 때의 느낌을 잊지 못해요. 깔끔한 첫 향과 시간이 지난 후의 잔향까지."
           imgSrc="https://www.trndf.com/news/data/20190709/p1065591406141189_714_thum.jpg"
           author="lyle"
@@ -40,38 +53,43 @@ const MyPage = () => {
       </Wrapper>
       <Wrapper>
         <PerfumeListWrapper>
-          <PerfumeCard
-            name="PERFUME NAME"
-            brand="브랜드 이름"
+          <BrandCard
+            brandName="브랜드 이름"
+            perfumeName="PERFUME NAME"
             score={4.3}
             imgSrc="https://www.trndf.com/news/data/20190709/p1065591406141189_714_thum.jpg"
           />
-          <PerfumeCard
-            name="PERFUME NAME"
-            brand="브랜드 이름"
+          <BrandCard
+            brandName="브랜드 이름"
+            perfumeName="PERFUME NAME"
             score={4.3}
             imgSrc="https://www.trndf.com/news/data/20190709/p1065591406141189_714_thum.jpg"
           />
-          <PerfumeCard
-            name="PERFUME NAME"
-            brand="브랜드 이름"
+          <BrandCard
+            brandName="브랜드 이름"
+            perfumeName="PERFUME NAME"
             score={4.3}
             imgSrc="https://www.trndf.com/news/data/20190709/p1065591406141189_714_thum.jpg"
           />
-          <PerfumeCard
-            name="PERFUME NAME"
-            brand="브랜드 이름"
+          <BrandCard
+            brandName="브랜드 이름"
+            perfumeName="PERFUME NAME"
             score={4.3}
             imgSrc="https://www.trndf.com/news/data/20190709/p1065591406141189_714_thum.jpg"
           />
-          <PerfumeCard
-            name="PERFUME NAME"
-            brand="브랜드 이름"
+          <BrandCard
+            brandName="브랜드 이름"
+            perfumeName="PERFUME NAME"
             score={4.3}
             imgSrc="https://www.trndf.com/news/data/20190709/p1065591406141189_714_thum.jpg"
           />
         </PerfumeListWrapper>
       </Wrapper>
+      <Modal
+        modalKey={MODAL_KEYS.nicknameUpdate}
+        open={nicknameUpdateModal.isOpen}
+        content={<NicknameUpdateModal />}
+      />
     </>
   );
 };
@@ -81,6 +99,7 @@ export default MyPage;
 const Wrapper = styled.div`
   padding: 70px 0 70px 0;
   border-bottom: 1px solid #707070;
+  text-align: center;
 
   &:last-of-type {
     border-bottom: 0;
@@ -93,11 +112,21 @@ const PerfumeListWrapper = styled.div`
   gap: 58px 12px;
 `;
 
+const NicknameUpdateButton = styled(Button)`
+  width: 156px;
+  height: 52px;
+  font-size: 20px;
+  font-weight: 100;
+  border: 1px solid;
+  border-radius: 0;
+  margin-top: 46px;
+`;
+
 const SummaryText = styled.p`
   text-align: center;
   font-size: 30px;
 
   &:first-of-type {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
 `;

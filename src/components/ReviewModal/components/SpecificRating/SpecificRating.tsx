@@ -11,6 +11,7 @@ type RatingListType = {
 const RatingList: RatingListType[] = [
   { name: "longevityRatings", title: "지속력" },
   { name: "sillageRatings", title: "잔향" },
+  { name: "scentRatings", title: "본연의 향" },
 ];
 
 const SpecificRating = () => {

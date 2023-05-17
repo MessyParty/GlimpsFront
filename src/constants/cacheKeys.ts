@@ -3,4 +3,5 @@ export const CACHE_KEYS = {
   refresh: ["refresh"],
   logout: ["logout"],
   profile: ["profile"],
+  myReviews: ["review", "my"],
 };
