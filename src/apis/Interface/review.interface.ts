@@ -1,4 +1,5 @@
 export type Review = {
+  perfumeBrandEng: string;
   body: string;
   createdAt: string;
   heartCnt: number;
@@ -13,6 +14,7 @@ export type Review = {
   title: string;
   tags?: string[];
   uuid: string;
+  scentRatings: number;
 };
 
 export type ReviewFormType = Pick<

@@ -6,12 +6,14 @@ import styled from "@emotion/styled";
 type RatingListType = {
   name: string;
   title: string;
+  subTitle: string;
 };
 
 const RatingList: RatingListType[] = [
-  { name: "longevityRatings", title: "지속력" },
-  { name: "sillageRatings", title: "잔향" },
-  { name: "scentRatings", title: "본연의 향" },
+  { name: "scentRatings", title: "본연의 향", subTitle: "SCENT" },
+  { name: "longevityRatings", title: "지속력", subTitle: "LONGEVITY" },
+  { name: "sillageRatings", title: "잔향", subTitle: "SILLAGE" },
+
 ];
 
 const SpecificRating = () => {
@@ -19,12 +21,22 @@ const SpecificRating = () => {
 
   return (
     <Wrapper>
-      {RatingList.map(({ name, title }) => (
+      {RatingList.map(({ name, title, subTitle }) => (
         <Item key={name}>
           <div className="title">
-            <Typography>{title}</Typography>
+            <Typography fontWeight="bold" fontSize={18}>
+              {title}
+            </Typography>
+            <Typography fontSize={15} color="#474747">
+              {subTitle}
+            </Typography>
           </div>
-          <Rating controlProps={{ name, control }} precision={0.5} />
+          <Rating
+            controlProps={{ name, control }}
+            sx={{ fontSize: "40px" }}
+            precision={0.5}
+            size="large"
+          />
         </Item>
       ))}
     </Wrapper>
@@ -40,8 +52,11 @@ const Wrapper = styled.div`
 
 const Item = styled.div`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   & > .title {
     display: flex;
     flex-direction: column;
+    margin-right: 2rem;
   }
 `;

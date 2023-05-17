@@ -1,7 +1,7 @@
 import { FormProvider, useForm, useFormState } from "react-hook-form";
 import styled from "@emotion/styled";
 import { OverallRating } from "./components";
-import type { ReviewPostType } from "@/apis/Interface/review.interface";
+import type { Review, ReviewPostType } from "@/apis/Interface/review.interface";
 import SpecificRating from "./components/SpecificRating";
 import MoodSelector from "./components/MoodSelector";
 import TitleInput from "./components/TitleInput";
@@ -10,6 +10,7 @@ import ImageInput from "./components/ImageInput";
 import { Divider, Typography } from "@mui/material";
 import Button from "../Button";
 import Spacer from "../Spacer";
+import { updateReview } from "@/apis/review";
 import { useCreateReview, useCreateReviewPhoto } from "@/hooks/queries";
 import type { Review } from "@/apis/Interface/review.interface";
 import { MODAL_KEYS } from "@/constants/modalKeys";
@@ -18,26 +19,32 @@ import useModal from "@/hooks/useModal";
 type FormType = Review & { photo: Blob[] };
 type ReviewModalPropsType = Pick<ReviewPostType, "perfumeUuid"> & {
   perfumeName?: string;
-  perfumeSubName?: string;
+  perfumeBrandEng?: string;
+  reviewData?: Review;
 };
 
 const ReviewModal = ({
   perfumeUuid,
   perfumeName = "GENTLE NIGHT",
-  perfumeSubName = "NONFICTION",
+  perfumeBrandEng = "NONFICTION",
+  reviewData,
 }: ReviewModalPropsType) => {
   const methods = useForm<FormType>({
     defaultValues: {
-      body: "",
-      longevityRatings: 0,
-      overallRatings: 0,
-      scentRatings: 0,
-      photo: [],
-      tags: [],
-      sillageRatings: 0,
-      title: "",
+      ...(reviewData || {
+        body: "",
+        longevityRatings: 0,
+        overallRatings: 0,
+        photoUrls: [],
+        tags: [],
+        sillageRatings: 0,
+        title: "",
+      }),
+      ...reviewData,
+
     },
   });
+
   const { errors } = useFormState({
     control: methods.control,
     name: ["title", "body"],
@@ -46,6 +53,29 @@ const ReviewModal = ({
   const { mutateAsync: mutatePhoto } = useCreateReviewPhoto();
   const { closeModal } = useModal(MODAL_KEYS["review"]);
 
+
+  const isEditMode = true;
+
+  const onSubmit = async (data: ReviewFormType) => {
+    console.log(data);
+
+    if (isEditMode && reviewData?.uuid) {
+      try {
+        const updatedReview = await updateReview<Review, ReviewPostType>(
+          reviewData.uuid,
+          {
+            ...data,
+            perfumeUuid: reviewData.uuid,
+          },
+        );
+        console.log(updatedReview);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      // 새로운 리뷰 작성
+    }
+    
   const onSubmit = async (data: FormType) => {
     const {
       body,
@@ -80,7 +110,9 @@ const ReviewModal = ({
       <FormWrapper>
         <HeaderText>
           <Typography variant="h5">{perfumeName}</Typography>
-          <Typography variant="subtitle1">{perfumeSubName}</Typography>
+          <Typography variant="subtitle1">
+            {reviewData ? reviewData.perfumeBrandEng : perfumeBrandEng}
+          </Typography>
         </HeaderText>
         <Spacer y={2} />
         <ReviewDivider variant="middle" />
@@ -97,7 +129,7 @@ const ReviewModal = ({
           <Spacer />
           <WrapperFull>
             <Typography variant="h6">Mood</Typography>
-            <MoodSelector />
+            {/* <MoodSelector /> */}
             {errors?.tags?.message ? (
               <ErrorMsg>{errors?.tags?.message}</ErrorMsg>
             ) : null}
@@ -130,7 +162,7 @@ const ReviewModal = ({
             customColor="black"
             customTextColor="white"
           >
-            리뷰 남기기
+            {reviewData ? "수정하기" : "리뷰 남기기"}
           </Button>
         </Form>
       </FormWrapper>
