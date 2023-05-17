@@ -13,6 +13,7 @@ const RatingList: RatingListType[] = [
   { name: "scentRatings", title: "본연의 향", subTitle: "SCENT" },
   { name: "longevityRatings", title: "지속력", subTitle: "LONGEVITY" },
   { name: "sillageRatings", title: "잔향", subTitle: "SILLAGE" },
+
 ];
 
 const SpecificRating = () => {

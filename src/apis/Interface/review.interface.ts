@@ -10,6 +10,7 @@ export type Review = {
   perfumeName: string;
   photoUrls: string[];
   sillageRatings: number;
+  scentRatings: number;
   title: string;
   tags?: string[];
   uuid: string;
@@ -21,10 +22,9 @@ export type ReviewFormType = Pick<
   | "body"
   | "longevityRatings"
   | "overallRatings"
-  | "photoUrls"
+  | "scentRatings"
   | "sillageRatings"
   | "title"
-  | "tags"
 >;
 
 export type ReviewPostType = ReviewFormType & { perfumeUuid: string };

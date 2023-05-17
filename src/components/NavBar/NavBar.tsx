@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState, Suspense, lazy } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import Link from "next/link";
@@ -13,23 +15,57 @@ import useLogoutQuery from "@/hooks/queries/useLogoutQuery";
 import useModal from "@/hooks/useModal";
 import { MODAL_KEYS } from "@/constants/modalKeys";
 import LoginModal from "../LoginModal";
+import { ACCESS_TOKEN_COOKIE } from "@/constants/auth";
+import { getCookie } from "@/utils/cookie";
 
-const NavBar = () => {
+interface AuthModuleProps {
+  loginModalCb: () => void;
+  logoutModalCb: () => void;
+}
+
+const AuthModule = ({ loginModalCb, logoutModalCb }: AuthModuleProps) => {
   const router = useRouter();
-  const loginModal = useModal(MODAL_KEYS.login);
-  const searchModal = useModal(MODAL_KEYS.search);
-  const { isLogined, logoutHandler } = useLogoutQuery();
+  const [logined, setLogined] = useState<boolean>(false);
+
+  useEffect(() => {
+    const token = getCookie(ACCESS_TOKEN_COOKIE);
+    // early return
+    if (!token) return;
+    setLogined(true);
+  }, []);
 
   const mypageHandler = () => {
     router.push("/mypage");
   };
 
-  const loginHandler = () => {
-    loginModal.openModal();
-  };
+  return logined ? (
+    <>
+      <IconButton color="primary" aria-label="user" onClick={mypageHandler}>
+        <PersonOutlineIcon />
+      </IconButton>
+      <IconButton color="primary" aria-label="logout" onClick={logoutModalCb}>
+        <LogoutOutlined />
+      </IconButton>
+    </>
+  ) : (
+    <IconButton color="primary" aria-label="login" onClick={loginModalCb}>
+      <LoginOutlined />
+    </IconButton>
+  );
+};
+
+const NavBar = () => {
+  const router = useRouter();
+  const loginModal = useModal(MODAL_KEYS.login);
+  const searchModal = useModal(MODAL_KEYS.search);
+  const { authState, logoutHandler } = useLogoutQuery();
 
   const searchHandler = () => {
     searchModal.openModal();
+  };
+
+  const loginHandler = () => {
+    loginModal.openModal();
   };
 
   if (ERROR_PAGE_REGEX.test(router.pathname)) return null;
@@ -55,7 +91,7 @@ const NavBar = () => {
           >
             <SearchIcon />
           </IconButton>
-          {isLogined ? (
+          {authState === "LOGINED" ? (
             <>
               <IconButton
                 color="primary"
@@ -81,6 +117,10 @@ const NavBar = () => {
               <LoginOutlined />
             </IconButton>
           )}
+          <AuthModule
+            loginModalCb={loginHandler}
+            logoutModalCb={logoutHandler}
+          />
         </Utils>
       </NavContainer>
       <Modal

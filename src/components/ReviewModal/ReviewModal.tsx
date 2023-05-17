@@ -11,8 +11,12 @@ import { Divider, Typography } from "@mui/material";
 import Button from "../Button";
 import Spacer from "../Spacer";
 import { updateReview } from "@/apis/review";
+import { useCreateReview, useCreateReviewPhoto } from "@/hooks/queries";
+import type { Review } from "@/apis/Interface/review.interface";
+import { MODAL_KEYS } from "@/constants/modalKeys";
+import useModal from "@/hooks/useModal";
 
-type ReviewFormType = Omit<ReviewPostType, "perfumeUuid">;
+type FormType = Review & { photo: Blob[] };
 type ReviewModalPropsType = Pick<ReviewPostType, "perfumeUuid"> & {
   perfumeName?: string;
   perfumeBrandEng?: string;
@@ -25,7 +29,7 @@ const ReviewModal = ({
   perfumeBrandEng = "NONFICTION",
   reviewData,
 }: ReviewModalPropsType) => {
-  const methods = useForm<ReviewFormType>({
+  const methods = useForm<FormType>({
     defaultValues: {
       ...(reviewData || {
         body: "",
@@ -37,13 +41,18 @@ const ReviewModal = ({
         title: "",
       }),
       ...reviewData,
+
     },
   });
 
   const { errors } = useFormState({
     control: methods.control,
-    name: ["tags", "title", "body"],
+    name: ["title", "body"],
   });
+  const { mutateAsync } = useCreateReview();
+  const { mutateAsync: mutatePhoto } = useCreateReviewPhoto();
+  const { closeModal } = useModal(MODAL_KEYS["review"]);
+
 
   const isEditMode = true;
 
@@ -66,6 +75,34 @@ const ReviewModal = ({
     } else {
       // 새로운 리뷰 작성
     }
+    
+  const onSubmit = async (data: FormType) => {
+    const {
+      body,
+      longevityRatings,
+      overallRatings,
+      scentRatings,
+      sillageRatings,
+      title,
+      photo,
+    } = data;
+    // console.log(data);
+    const formData = new FormData();
+    formData.append("files", photo[0]);
+
+    const result = await mutateAsync({
+      body,
+      longevityRatings,
+      overallRatings,
+      scentRatings,
+      sillageRatings,
+      title,
+      perfumeUuid,
+    });
+
+    await mutatePhoto({ id: result.uuid, photo: formData });
+
+    closeModal();
   };
 
   return (

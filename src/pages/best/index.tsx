@@ -1,13 +1,12 @@
 import React from "react";
-import BrandCard from "@/components/BrandCard";
 import TitleBox from "@/components/TitleBox";
-import useBestPerfume from "@/hooks/queries/useBestPerfume";
 import styled from "@emotion/styled";
-import { PerfumeData } from "@root/__mocks__/PerfumeData";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 
 import { getBestPerfume } from "@/apis/perfume";
+import useBestPerfume from "@/hooks/queries/useBestPerfume";
+import BrandCard from "@/components/BrandCard";
 
 const DEFAULT_IMG =
   "https://www.trndf.com/news/data/20190709/p1065591406141189_714_thum.jpg";
@@ -18,27 +17,15 @@ export default function BestPage() {
     <div>
       <TitleBox title="BEST" subtitle="PERFUMES" />
       <BrandBox>
-        {/* 테스트용 */}
-        {PerfumeData.map((perfume) => (
-          <React.Fragment key={perfume.id}>
-            <BrandCard
-              brandName={perfume.brandName}
-              perfumeName={perfume.perfumeName}
-              score={perfume.score}
-              imgSrc={perfume.imgSrc}
-            />
-          </React.Fragment>
-        ))}
-        {/* 실제 데이터 들어가는 곳 */}
         {bestData
           ? bestData.map(
-              ({ brandName, perfumeName, overallRatings, photoUrls }) => (
+              ({ brandName, perfumeName, overallRatings, photos }) => (
                 <React.Fragment key={brandName}>
                   <BrandCard
                     brandName={brandName}
                     perfumeName={perfumeName}
                     score={overallRatings}
-                    imgSrc={photoUrls[0] ?? DEFAULT_IMG}
+                    imgSrc={photos[0].url ?? DEFAULT_IMG}
                   />
                 </React.Fragment>
               ),

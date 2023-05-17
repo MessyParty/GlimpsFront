@@ -35,7 +35,7 @@ const LikeButton = ({ initialState, likeCnt }: LikeButtonType) => {
       >
         {selected ? <Favorite /> : <FavoriteBorder />}
       </IconButton>
-      <LikeCnt>{likeCnt ?? 16}</LikeCnt>
+      <LikeCnt>{likeCnt ?? 0}</LikeCnt>
     </>
   );
 };

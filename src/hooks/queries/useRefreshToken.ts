@@ -1,38 +1,45 @@
 import { refresh } from "@/apis/auth";
 import { ACCESS_TOKEN_COOKIE, REFRESH_TOKEN_COOKIE } from "@/constants/auth";
 import { CACHE_KEYS } from "@/constants/cacheKeys";
-import { setCookie, getCookie } from "@/utils/cookie";
+import { authActionAtom } from "@/recoil/authAtom";
+import { getCookie, setCookie } from "@/utils/cookie";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
 import useLogoutQuery from "./useLogoutQuery";
 
 const useRefreshToken = () => {
   const router = useRouter();
-  const token = getCookie(REFRESH_TOKEN_COOKIE);
+  const { logoutHandler } = useLogoutQuery();
+  const refreshToken = getCookie(REFRESH_TOKEN_COOKIE);
+  const [authAction, setAuthAction] = useRecoilState(authActionAtom);
 
   const logout = () => {
-    alert("로그아웃 되었습니다.");
-    useLogoutQuery();
+    logoutHandler();
   };
 
-  if (token === undefined) {
-    logout();
+  if (refreshToken === undefined) {
+    return logout();
   }
 
   useQuery(CACHE_KEYS.refresh, () => refresh(), {
+    enabled: authAction === "REFRESH",
     onSuccess: (response) => {
       setCookie(ACCESS_TOKEN_COOKIE, response.accessToken, {
         path: "/",
-        maxAge: response.accessTokenExpireTime * 1000,
+        expires: new Date(response.accessTokenExpireTime),
       });
+      setAuthAction("LOGIN");
       router.replace("/");
     },
     onError: () => {
+      alert("로그인 상태가 유효하지 않습니다.");
       logout();
+      router.push("/");
     },
   });
 
-  return null;
+  return setAuthAction("REFRESH");
 };
 
 export default useRefreshToken;

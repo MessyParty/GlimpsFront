@@ -48,7 +48,7 @@ const reset = css`
     border-spacing: 0;
   }
   html {
-  font-family: 'Libre Baskerville', 'Pretendard', 'sans-serif';
+  font-family: 'Pretendard', 'sans-serif';
 }
   ol, ul {
     list-style: none;

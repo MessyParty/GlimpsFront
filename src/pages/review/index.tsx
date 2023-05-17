@@ -48,7 +48,7 @@ const ReviewPage = () => {
                   />
                   <Divider sx={{ borderColor: "black" }} />
                 </React.Fragment>
-              ),
+              )
             )
           : null}
       </BestArea>
@@ -80,7 +80,7 @@ const ReviewPage = () => {
                   />
                   <Divider sx={{ borderColor: "black" }} />
                 </React.Fragment>
-              ),
+              )
             )
           : null}
       </AllArea>
@@ -96,7 +96,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   await Promise.allSettled([
     queryClient.prefetchQuery({
-      queryKey: ["review", "best"],
+      queryKey: ["review", "best", 3],
       queryFn: () => getBestReview(3),
     }),
     queryClient.prefetchQuery({
