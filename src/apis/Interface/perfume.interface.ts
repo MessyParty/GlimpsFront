@@ -1,3 +1,8 @@
+
+export type PerfumeData = {
+  brandId: number;
+};
+
 export type Note = {
   engName: string;
   id: number;
@@ -11,6 +16,7 @@ export type Photo = {
 
 export type Perfume = {
   brandId: string;
+
   brandName: string;
   brandNameKor: string;
   longevityRatings: number;
@@ -25,4 +31,8 @@ export type Perfume = {
 
 export type ReviewPhoto = {
   photoUrl: string;
+};
+
+export type Perfume = {
+  content?: PerfumeData[];
 };

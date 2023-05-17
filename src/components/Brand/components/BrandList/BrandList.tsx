@@ -4,7 +4,8 @@ import Link from "next/link";
 
 type PerfumeData = {
   brandId: number;
-  brandName: string;
+  brandNameKor: string;
+  brandNameEng: string;
 };
 
 interface BrandListProps {
@@ -14,13 +15,16 @@ interface BrandListProps {
 export default function BrandList({ filteredBrands }: BrandListProps) {
   return (
     <BrandContainer>
-      {filteredBrands?.map(({ brandId, brandName }) => (
+      {filteredBrands?.map(({ brandId, brandNameKor, brandNameEng }) => (
         <div key={brandId}>
           <Link
-            href={`/perfumes?brand=${encodeURIComponent(brandName)}`}
+            href={`/perfumes?brand=${encodeURIComponent(brandNameEng)}`}
             legacyBehavior
           >
-            <a className="perfume-brand">{brandName}</a>
+            <a>
+              <p className="perfume-brand">{`${brandNameEng}`.toUpperCase()}</p>
+              <p className="perfume-brand">{brandNameKor}</p>
+            </a>
           </Link>
         </div>
       ))}
@@ -35,21 +39,9 @@ const BrandContainer = styled.div`
 
   & div {
     margin: 1rem 0;
-    & .perfume-button {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
+    & .perfume-brand {
+      font-size: 20px;
+      padding: 10px 0;
     }
   }
-`;
-
-const BrandEn = styled.span`
-  font-size: 22px;
-  font-weight: bold;
-  padding: 10px 0;
-`;
-
-const BrandKr = styled.span`
-  font-size: 20px;
-  padding: 10px 0;
 `;
