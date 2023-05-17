@@ -20,7 +20,8 @@ const ImageInput = () => {
   });
 
   useEffect(() => {
-    if (!img) return;
+    if (!img.length) return;
+    console.log(img);
     fileReader.readAsDataURL(img[0]);
     fileReader.onload = () => {
       const { result } = fileReader;

@@ -9,7 +9,8 @@ const LoginModal = () => {
   const router = useRouter();
 
   const login = () => {
-    router.push(KAKAO_AUTH_URL);
+    // router.push(KAKAO_AUTH_URL);
+    window.location.href = KAKAO_AUTH_URL;
   };
 
   return (

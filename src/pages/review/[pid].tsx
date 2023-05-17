@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery(["review", rid], () =>
-    getReview(rid as string),
+    getReview(rid as string)
   );
 
   return {
