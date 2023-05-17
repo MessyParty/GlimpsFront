@@ -10,8 +10,12 @@ import ImageInput from "./components/ImageInput";
 import { Divider, Typography } from "@mui/material";
 import Button from "../Button";
 import Spacer from "../Spacer";
+import { useCreateReview, useCreateReviewPhoto } from "@/hooks/queries";
+import type { Review } from "@/apis/Interface/review.interface";
+import { MODAL_KEYS } from "@/constants/modalKeys";
+import useModal from "@/hooks/useModal";
 
-type ReviewFormType = Omit<ReviewPostType, "perfumeUuid">;
+type FormType = Review & { photo: Blob[] };
 type ReviewModalPropsType = Pick<ReviewPostType, "perfumeUuid"> & {
   perfumeName?: string;
   perfumeSubName?: string;
@@ -22,12 +26,13 @@ const ReviewModal = ({
   perfumeName = "GENTLE NIGHT",
   perfumeSubName = "NONFICTION",
 }: ReviewModalPropsType) => {
-  const methods = useForm<ReviewFormType>({
+  const methods = useForm<FormType>({
     defaultValues: {
       body: "",
       longevityRatings: 0,
       overallRatings: 0,
-      photoUrls: [],
+      scentRatings: 0,
+      photo: [],
       tags: [],
       sillageRatings: 0,
       title: "",
@@ -35,11 +40,39 @@ const ReviewModal = ({
   });
   const { errors } = useFormState({
     control: methods.control,
-    name: ["tags", "title", "body"],
+    name: ["title", "body"],
   });
+  const { mutateAsync } = useCreateReview();
+  const { mutateAsync: mutatePhoto } = useCreateReviewPhoto();
+  const { closeModal } = useModal(MODAL_KEYS["review"]);
 
-  const onSubmit = (data: ReviewFormType) => {
-    console.log(data);
+  const onSubmit = async (data: FormType) => {
+    const {
+      body,
+      longevityRatings,
+      overallRatings,
+      scentRatings,
+      sillageRatings,
+      title,
+      photo,
+    } = data;
+    // console.log(data);
+    const formData = new FormData();
+    formData.append("files", photo[0]);
+
+    const result = await mutateAsync({
+      body,
+      longevityRatings,
+      overallRatings,
+      scentRatings,
+      sillageRatings,
+      title,
+      perfumeUuid,
+    });
+
+    await mutatePhoto({ id: result.uuid, photo: formData });
+
+    closeModal();
   };
 
   return (

@@ -12,6 +12,7 @@ import Modal from "../Modal";
 import styled from "@emotion/styled";
 import { MODAL_KEYS } from "@/constants/modalKeys";
 import useModal from "@/hooks/useModal";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 type Order = "DATE" | "HEARTS_COUNT";
 
@@ -47,6 +48,7 @@ const SortController = ({
         value={value}
         onChange={onChange}
         input={<CustomInput disableUnderline />}
+        IconComponent={KeyboardArrowDownIcon}
       >
         <MenuItem value="DATE">날짜순</MenuItem>
         <MenuItem value="HEARTS_COUNT">추천순</MenuItem>
