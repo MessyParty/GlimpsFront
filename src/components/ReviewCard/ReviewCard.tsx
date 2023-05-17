@@ -19,7 +19,7 @@ interface ReviewCardProps extends CardProps {
   uuid?: string;
 }
 
-const ReviewCard2 = ({
+const ReviewCard = ({
   reviewTitle,
   author,
   score,
@@ -84,7 +84,7 @@ const ReviewCard2 = ({
   );
 };
 
-export default ReviewCard2;
+export default ReviewCard;
 
 const Container = styled(Card)`
   display: flex;
