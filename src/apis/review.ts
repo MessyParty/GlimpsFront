@@ -77,3 +77,12 @@ export const getAllReview = async (
   });
   return data;
 };
+
+export const getMyReview = async (
+  params: ReviewParameterType
+): Promise<ReviewListType[]> => {
+  const { data } = await api.get(`/reviews/myReviews`, {
+    params,
+  });
+  return data;
+};

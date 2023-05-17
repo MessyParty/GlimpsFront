@@ -29,7 +29,7 @@ const BrandCard = ({
         </div>
         <PerfumeBox>
           <div className="perfume-info">
-            <Typography fontSize="21px" fontWeight="bold">
+            <Typography fontSize="21px" textAlign="left">
               {brandName}
             </Typography>
             <Typography fontSize="18px">{perfumeName}</Typography>
@@ -55,6 +55,7 @@ const Container = styled(Card)`
 
 const Content = styled(CardContent)`
   padding: 0;
+
   & > .perfume-img img {
     width: 100%;
     height: 405px;
@@ -66,7 +67,7 @@ const PerfumeBox = styled.div`
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #000;
-  margin: 2rem 1.5rem;
+  margin: 23px 26px 14px 26px;
 
   & .score {
     width: 66px;
@@ -74,7 +75,6 @@ const PerfumeBox = styled.div`
     background-color: #000;
 
     & p {
-      text-align: center;
       line-height: 66px;
       color: #fff;
     }
