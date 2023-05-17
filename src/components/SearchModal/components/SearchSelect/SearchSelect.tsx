@@ -4,6 +4,7 @@ import { Input, MenuItem, Select } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import FormControl from "@mui/material/FormControl";
 import { SelectChangeEvent } from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const OPTIONS: { value: string; name: string }[] = [
   { value: "brand", name: "Brand" },
@@ -45,6 +46,7 @@ export default function SearchSelect({ optionCb }: SearchSelectProps) {
             padding: ".7rem 0",
             borderRight: "1px solid #000",
           }}
+          IconComponent={KeyboardArrowDownIcon}
         >
           {OPTIONS.map((option) => (
             <MenuItem key={option.value} value={option.value}>

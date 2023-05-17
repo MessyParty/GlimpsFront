@@ -6,6 +6,7 @@ import type {
   ReviewParameterType,
   ReviewListType,
 } from "./Interface/review.interface";
+import type { ReviewPhoto } from "./Interface/perfume.interface";
 
 export const getBestReview = async (num: number): Promise<Review[]> => {
   const { data } = await api.get<Review[]>("/reviews/bestReviews", {
@@ -74,5 +75,18 @@ export const getAllReview = async (
   const { data } = await api.get<ReviewListType[]>(`/reviews`, {
     params,
   });
+  return data;
+};
+
+export const getBestReviewByPerfume = async (
+  pid: string
+): Promise<Review[]> => {
+  const { data } = await api.get<Review[]>(`/reviews/${pid}/bestReviews`);
+  return data;
+};
+
+// prettier-ignore
+export const createReviewPhoto = async (uuid: string, body: FormData): Promise<ReviewPhoto[]> => {
+  const { data } = await api.post<ReviewPhoto[]>(`/reviews/photos/${uuid}`, body, { headers: { "Content-Type": "multipart/form-data" } });
   return data;
 };

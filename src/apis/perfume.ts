@@ -1,15 +1,15 @@
 import api from ".";
 import type { Perfume } from "./Interface/perfume.interface";
 
-export const getPerfume = async (rid: number): Promise<Perfume[]> => {
-  const { data } = await api.get<Perfume[]>(`/perfumes/${rid}`);
+export const getPerfume = async (rid: string): Promise<Perfume> => {
+  const { data } = await api.get<Perfume>(`/perfumes/${rid}`);
   return data;
 };
 
 export const getBestPerfume = async (num: number): Promise<Perfume[]> => {
   const { data } = await api.get<Perfume[]>("/perfumes/best", {
     params: {
-      amountPerfumes: num,
+      amount: num,
     },
   });
   return data;
